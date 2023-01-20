@@ -2,12 +2,14 @@
 import React, {
   useEffect,
   useState
-} from 'react'; 
+} from 'react';
+import Header from '../../components/Header';
 
-const TVTracker = ({ navigation }) => { 
+const TVTracker = ({ navigation }) => {
   return (
-    <> 
-    </>
+
+    <Header title={`TV Tracker`} />
+
   );
 };
 export default TVTracker;
