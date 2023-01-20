@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import Octicons from 'react-native-vector-icons/Octicons'
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import Entypo from 'react-native-vector-icons/Entypo'
 
@@ -22,15 +22,15 @@ export default class BottomTabNavigator extends Component {
         initialRouteName="My Profile"
 
         screenOptions={{
-          tabBarActiveTintColor: Colors.white,
+          tabBarActiveTintColor: Colors.tabActive,
           tabBarInactiveTintColor: Colors.tabInactive,
           headerShown: false,
           tabBarStyle: {
-            backgroundColor: "rgb(45,45,45)",
+            backgroundColor: `#262626`,
             paddingVertical: RFPercentage(0.6),
             paddingBottom: Platform.OS == 'ios' ? RFPercentage(3) : RFPercentage(0.5),
             height: Platform.OS == 'ios' ? RFPercentage(9.2) : RFPercentage(10),
-          }
+          },
         }}
 
       >
@@ -39,11 +39,11 @@ export default class BottomTabNavigator extends Component {
           component={TVTracker}
           options={{
             tabBarIcon: ({ color, size }) => (
-              <Octicons
-                name='home'
-                size={RFPercentage(3)}
+              <FontAwesome
+                name='tv'
+                size={RFPercentage(2.7)}
                 color={color} />
-            )
+            ),
           }}
         />
         <BottomTab.Screen
@@ -52,8 +52,8 @@ export default class BottomTabNavigator extends Component {
           options={{
             tabBarIcon: ({ color, size }) => (
               <Entypo
-                name='browser'
-                size={RFPercentage(2.5)}
+                name='back-in-time'
+                size={RFPercentage(2.7)}
                 color={color} />
             )
           }}
@@ -63,10 +63,9 @@ export default class BottomTabNavigator extends Component {
           component={Find}
           options={{
             tabBarIcon: ({ color, size }) => (
-              <MaterialIcons
-                name='online-prediction'
-                size={RFPercentage(4)}
-                style={{ marginBottom: RFPercentage(0) }}
+              <FontAwesome
+                name='search'
+                size={RFPercentage(2.7)}
                 color={color} />
             )
           }}
@@ -77,8 +76,8 @@ export default class BottomTabNavigator extends Component {
           options={{
             tabBarIcon: ({ color, size }) => (
               <Entypo
-                name='folder-video'
-                size={RFPercentage(3)}
+                name='dots-three-horizontal'
+                size={RFPercentage(2.7)}
                 color={color} />)
           }}
         />
