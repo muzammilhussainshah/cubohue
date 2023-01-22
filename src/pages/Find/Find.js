@@ -29,7 +29,6 @@ const Find = ({ }) => {
     <View style={styles.container}>
       <Header title={`Find`} />
       <View style={styles.tabContainer}>
-
         <Button
           customStyle={styles.tabButtonStyle('Movies', activeTab)}
           title={`Movies`}
@@ -44,21 +43,24 @@ const Find = ({ }) => {
         />
       </View>
       <SearchBar
-        icon={<Fontisto name="search" color={Colors.tabInactive} size={RFPercentage(2)} />}
+        icon={<Fontisto
+          name="search"
+          color={Colors.tabInactive}
+          size={RFPercentage(2)} />}
         containerStyle={styles.SearchBarStyle}
         placeholderTextColor={Colors.tabInactive}
         placeHolder={`Movies & TV Shows`}
         textStyle={styles.textStyle}
       />
-      <Text style={styles.listTitle}>Coming Soon</Text>
+      <Text
+        style={styles.listTitle}>{`Coming Soon`}</Text>
       <FlatList
         data={DUMMYTHUMBNAIL}
         numColumns={2}
-        columnWrapperStyle={{ justifyContent: 'space-evenly', alignItems: 'center' }}
+        columnWrapperStyle={styles.listContainer}
         renderItem={({ item }) => {
           return (
             <View style={styles.thumbnailContainer}>
-
               <Image
                 source={{ uri: item }}
                 resizeMode={'stretch'}
@@ -66,7 +68,10 @@ const Find = ({ }) => {
               />
               <Button
                 customStyle={styles.addIconContainer}
-                title={<AntDesign name={`plus`} size={RFPercentage(2)} color={Colors.white} />}
+                title={<AntDesign
+                  name={`plus`}
+                  size={RFPercentage(2)}
+                  color={Colors.white} />}
               />
             </View>
           )

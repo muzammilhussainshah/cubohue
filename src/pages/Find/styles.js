@@ -3,15 +3,18 @@ import { RFPercentage } from 'react-native-responsive-fontsize';
 import Colors from '../../styles/Colors';
 export const styles = StyleSheet.create({
 
-    container: { flex: 1, backgroundColor: Colors.black, },
-    tabContainer: { flexDirection: 'row', padding: RFPercentage(1), },
+    container: {
+        flex: 1,
+        backgroundColor: Colors.black,
+    },
+    tabContainer: {
+        flexDirection: 'row',
+        padding: RFPercentage(1),
+    },
     tabButtonStyle: (side, activeTab) => ({
         height: RFPercentage(5),
-        // width: '50%',
         flex: 1,
         backgroundColor: activeTab == side ? Colors.tabInactive : Colors.tabBg,
-
-
         borderTopLeftRadius: side == 'Movies' && RFPercentage(1),
         borderBottomLeftRadius: side == 'Movies' && RFPercentage(1),
         borderTopRightRadius: side == 'TV Shows' && RFPercentage(1),
@@ -70,7 +73,11 @@ export const styles = StyleSheet.create({
         backgroundColor: Colors.tabBg,
         justifyContent: 'center',
         alignItems: 'center'
-    }
+    },
+    listContainer: {
+        justifyContent: 'space-evenly',
+        alignItems: 'center'
+    },
 
 
 });
