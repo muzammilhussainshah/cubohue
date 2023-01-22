@@ -3,18 +3,26 @@ import React, {
   useEffect,
   useState
 } from 'react';
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
+import Button from '../../components/Button';
 import Header from '../../components/Header';
 import Colors from '../../styles/Colors';
+import { styles } from './styles';
 
 const Countdown = ({ navigation }) => {
   return (
-    <Header
-      title={`Countdown`}
-      edit
-    // leftIcon={<Text style={{ color: Colors.tabActive }}></Text>}
-    // rightIcon={<Text style={{ color: Colors.tabActive }}>Edit</Text>}
-    />
+    <View style={styles.container}>
+      <Header
+        title={`Countdown`}
+        edit
+      />
+      <Button
+        customStyle={styles.buttonStyle}
+        title={`Movies`}
+        titleStyle={styles.titleStyle}
+        callBack={() => { }}
+      />
+    </View>
   );
 };
 export default Countdown;
