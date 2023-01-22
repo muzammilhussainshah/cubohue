@@ -1,12 +1,8 @@
 // @app
-import React, {
-    useEffect,
-    useState
-} from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
-import { styles } from './styles';
+import React from 'react';
+import { Text, TouchableOpacity, } from 'react-native';
 
-const Button = ({ navigation, customStyle, titleStyle, title, callBack }) => {
+const Button = ({ customStyle, titleStyle, title, callBack }) => {
     return (
         <TouchableOpacity
             style={customStyle}
