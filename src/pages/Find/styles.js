@@ -40,6 +40,37 @@ export const styles = StyleSheet.create({
         flex: 1,
         padding: 0,
         height: '100%',
-        marginHorizontal:RFPercentage(1)
+        marginHorizontal: RFPercentage(1)
+    },
+    listTitle: {
+        color: Colors.white,
+        fontWeight: '600',
+        fontSize: RFPercentage(1.8),
+        margin: RFPercentage(1)
+    },
+    thumbnailContainer: {
+        height: RFPercentage(25),
+        width: RFPercentage(20),
+        borderRadius: RFPercentage(1),
+        marginBottom: RFPercentage(2),
+        overflow: "hidden"
+    },
+    thumbnailStyle: {
+        width: "100%",
+        height: "100%"
+    },
+    addIconContainer: {
+        position: "absolute",
+        zIndex: 2,
+        height: RFPercentage(3.2),
+        width: RFPercentage(3.2),
+        borderRadius: RFPercentage(1.6),
+        bottom: RFPercentage(1),
+        right: RFPercentage(1),
+        backgroundColor: Colors.tabBg,
+        justifyContent: 'center',
+        alignItems: 'center'
     }
+
+
 });
