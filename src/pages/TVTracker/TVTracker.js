@@ -19,7 +19,7 @@ const TVTracker = ({ navigation }) => {
         customStyle={styles.buttonStyle}
         title={`Add TV Show`}
         titleStyle={styles.titleStyle}
-        callBack={() => { }}
+        callBack={() => navigation.navigate('Find')}
       />
     </View>
   );

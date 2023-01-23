@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
         padding: RFPercentage(1),
     },
     tabButtonStyle: (side, activeTab) => ({
-        height: RFPercentage(5),
+        height: RFPercentage(4),
         flex: 1,
         backgroundColor: activeTab == side ? Colors.tabInactive : Colors.tabBg,
         borderTopLeftRadius: side == 'Movies' && RFPercentage(1),
@@ -30,7 +30,7 @@ export const styles = StyleSheet.create({
 
     }),
     SearchBarStyle: {
-        height: RFPercentage(4),
+        height: RFPercentage(3.5),
         borderRadius: RFPercentage(1),
         backgroundColor: Colors.tabBg,
         marginHorizontal: RFPercentage(1),

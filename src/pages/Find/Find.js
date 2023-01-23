@@ -3,7 +3,7 @@ import React, {
   useEffect,
   useState
 } from 'react';
-import { FlatList, Image, Text, View } from 'react-native';
+import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
 import Button from '../../components/Button';
 import Header from '../../components/Header';
 import SearchBar from '../../components/SearchBar';
@@ -13,7 +13,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import { RFPercentage } from 'react-native-responsive-fontsize';
 import Colors from '../../styles/Colors';
 
-const Find = ({ }) => {
+const Find = ({ navigation }) => {
   const [activeTab, setActiveTab] = useState('Movies')
   const DUMMYTHUMBNAIL = [
     'https://people.com/thmb/R5ApUBbhBJOnjkQ66Zi84LcoE4E=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc():focal(1139x398:1141x400)/avatar-way-of-the-water-112222-1-c85447dc6bdf411b864fac62a7102993.jpg',
@@ -60,7 +60,10 @@ const Find = ({ }) => {
         columnWrapperStyle={styles.listContainer}
         renderItem={({ item }) => {
           return (
-            <View style={styles.thumbnailContainer}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('VideoScreen')}
+              activeOpacity={.8}
+              style={styles.thumbnailContainer}>
               <Image
                 source={{ uri: item }}
                 resizeMode={'stretch'}
@@ -68,12 +71,13 @@ const Find = ({ }) => {
               />
               <Button
                 customStyle={styles.addIconContainer}
+                callBack={() => navigation.navigate('VideoScreen')}
                 title={<AntDesign
                   name={`plus`}
                   size={RFPercentage(2)}
                   color={Colors.white} />}
               />
-            </View>
+            </TouchableOpacity>
           )
         }}
         keyExtractor={item => item.id}

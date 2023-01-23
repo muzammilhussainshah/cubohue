@@ -32,7 +32,6 @@ export default class BottomTabNavigator extends Component {
             height: Platform.OS == 'ios' ? RFPercentage(9.2) : RFPercentage(10),
           },
         }}
-
       >
         <BottomTab.Screen
           name="TV Tracker"
