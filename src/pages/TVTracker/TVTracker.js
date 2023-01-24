@@ -7,7 +7,6 @@ import { Text, View } from 'react-native';
 import { RFPercentage } from 'react-native-responsive-fontsize';
 import Button from '../../components/Button';
 import Header from '../../components/Header';
-import Colors from '../../styles/Colors';
 import { styles } from './styles';
 
 const TVTracker = ({ navigation }) => {

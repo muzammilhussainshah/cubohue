@@ -3,28 +3,45 @@ import React, {
   useEffect,
   useState
 } from 'react';
-import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
-import Button from '../../components/Button';
-import Header from '../../components/Header';
-import SearchBar from '../../components/SearchBar';
-import { styles } from './styles';
+import {
+  FlatList,
+  Image,
+  Text,
+  TouchableOpacity,
+  View
+} from 'react-native';
+
 import Fontisto from 'react-native-vector-icons/Fontisto'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { RFPercentage } from 'react-native-responsive-fontsize';
+import {
+  useDispatch,
+  useSelector
+} from 'react-redux';
+
+import Button from '../../components/Button';
+import Header from '../../components/Header';
+import SearchBar from '../../components/SearchBar';
 import Colors from '../../styles/Colors';
+import { styles } from './styles';
+import {
+  getTrendingTvShows,
+  getTVtime
+} from '../../store/action/action';
 
 const Find = ({ navigation }) => {
   const [activeTab, setActiveTab] = useState('Movies')
-  const DUMMYTHUMBNAIL = [
-    'https://people.com/thmb/R5ApUBbhBJOnjkQ66Zi84LcoE4E=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc():focal(1139x398:1141x400)/avatar-way-of-the-water-112222-1-c85447dc6bdf411b864fac62a7102993.jpg',
-    `https://cdn.cnn.com/cnnnext/dam/assets/221219142122-01-puss-in-boots-the-last-wish-film-super-tease.jpg`,
-    `https://i.ytimg.com/vi/KpsQ1bCl43s/maxresdefault.jpg`,
-    `https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZZPJlZgvMfGoO5S9u51ehcXhmwXBAmOBsNJGOBEU4A4A_-vTdZk1Mo_oDdrDnQguGorI&usqp=CAU`,
-    'https://people.com/thmb/R5ApUBbhBJOnjkQ66Zi84LcoE4E=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc():focal(1139x398:1141x400)/avatar-way-of-the-water-112222-1-c85447dc6bdf411b864fac62a7102993.jpg',
-    `https://cdn.cnn.com/cnnnext/dam/assets/221219142122-01-puss-in-boots-the-last-wish-film-super-tease.jpg`,
-    `https://i.ytimg.com/vi/KpsQ1bCl43s/maxresdefault.jpg`,
-    `https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZZPJlZgvMfGoO5S9u51ehcXhmwXBAmOBsNJGOBEU4A4A_-vTdZk1Mo_oDdrDnQguGorI&usqp=CAU`,
-  ]
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(getTVtime())
+    dispatch(getTrendingTvShows())
+  }, [])
+
+  const trandingMovies = useSelector((state) => state.root.trandingMovies);
+  const trandingTVShows = useSelector((state) => state.root.trandingTVShows);
+
   return (
     <View style={styles.container}>
       <Header title={`Find`} />
@@ -55,7 +72,7 @@ const Find = ({ navigation }) => {
       <Text
         style={styles.listTitle}>{`Coming Soon`}</Text>
       <FlatList
-        data={DUMMYTHUMBNAIL}
+        data={activeTab == 'Movies' ? trandingMovies : trandingTVShows}
         numColumns={2}
         columnWrapperStyle={styles.listContainer}
         renderItem={({ item }) => {
@@ -65,7 +82,7 @@ const Find = ({ navigation }) => {
               activeOpacity={.8}
               style={styles.thumbnailContainer}>
               <Image
-                source={{ uri: item }}
+                source={{ uri: `https://image.tmdb.org/t/p/w500/` + item.poster_path }}
                 resizeMode={'stretch'}
                 style={styles.thumbnailStyle}
               />
