@@ -33,6 +33,25 @@ export const getMovieDetails = (movieId) => {
     return async (dispatch) => {
         try {
             let response = await getResponse(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${TMDB_API_KEY}&language=en-US&page=1&include_adult=false&append_to_response=videos,credits`)
+            console.log(response, 'getMovieDetails')
+            dispatch({ type: ActionTypes.VIDEODETAIL, payload: response?.data });
+        }
+        catch (err) {
+            console.log(err, 'error')
+        }
+    }
+}
+// static async getTvShowsDetails(tvShowId) {
+//   let url = `https://api.themoviedb.org/3/tv/${tvShowId}?api_key=${TMDB_API_KEY}&language=en-US&page=1&include_adult=false&append_to_response=videos,credits`;
+//   let data = await fetch(url);
+//   return data.json();
+// }
+
+export const getTvShowsDetails = (tvShowId) => {
+    return async (dispatch) => {
+        try {
+            let response = await getResponse(`https://api.themoviedb.org/3/tv/${tvShowId}?api_key=${TMDB_API_KEY}&language=en-US&page=1&include_adult=false&append_to_response=videos,credits`)
+            console.log(response, 'getTvShowsDetails')
             dispatch({ type: ActionTypes.VIDEODETAIL, payload: response?.data });
         }
         catch (err) {

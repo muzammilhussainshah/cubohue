@@ -22,15 +22,20 @@ import {
   Trailer
 } from './Components/Component';
 import { useDispatch, useSelector } from 'react-redux';
-import { getMovieDetails } from '../../store/action/action';
+import { getMovieDetails, getTvShowsDetails } from '../../store/action/action';
 
 const VideoScreen = ({ navigation, route }) => {
   const [activeTab, setActiveTab] = useState('Cast & Crew')
+  const [isMovie, setisMovie] = useState(false)
   const dispatch = useDispatch()
 
   const videoDetail = useSelector((state) => state.root.videoDetail);
 
-  useEffect(() => { dispatch(getMovieDetails(route?.params?.id)) }, [])
+  useEffect(() => {
+    setisMovie(route?.params.activeTab !== 'TV Shows' ? true : false)
+    if (route?.params.activeTab !== 'TV Shows') dispatch(getMovieDetails(route?.params?.id))
+    else dispatch(getTvShowsDetails(route?.params?.id))
+  }, [])
 
   function toHoursAndMinutes(totalMinutes) {
     const hours = Math.floor(totalMinutes / 60);
@@ -53,9 +58,14 @@ const VideoScreen = ({ navigation, route }) => {
           source={{ uri: `https://image.tmdb.org/t/p/w500/` + videoDetail?.backdrop_path }}
           style={styles.videoContainer} />
         <View style={styles.bodyContainer}>
-          <Text style={styles.title(Colors.white, RFPercentage(2))}>{videoDetail?.title}</Text>
+          <Text style={styles.title(Colors.white, RFPercentage(2))}>{
+            isMovie ?
+              videoDetail?.title
+              :
+              videoDetail?.name
+          }</Text>
 
-          {[videoDetail.release_date, toHoursAndMinutes(videoDetail.runtime)]?.map((item) => <Text style={styles.title(Colors.tabInactive, RFPercentage(1.3))}>{item}</Text>)}
+          {[isMovie ? videoDetail.release_date : videoDetail.first_air_date, videoDetail.runtime ? toHoursAndMinutes(videoDetail.runtime) : '2h : 2m PG-13']?.map((item) => <Text style={styles.title(Colors.tabInactive, RFPercentage(1.3))}>{item}</Text>)}
 
           <Text style={styles.title(Colors.white, RFPercentage(1.4), RFPercentage(.1))}>{videoDetail.overview}</Text>
           <View style={styles.tags}>
