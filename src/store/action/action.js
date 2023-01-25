@@ -10,7 +10,7 @@ const TMDB_API_KEY = '54ed8b21fd2d7a380faaa388189b382f';
 export const getTVtime = (date) => {
     return async (dispatch) => {
         try {
-            let response = await getResponse(`https://api.themoviedb.org/3/trending/movie/week?api_key=${TMDB_API_KEY}&language=en-US&page=1&include_adult=false`)
+            let response = await getResponse(`https://api.themoviedb.org/3/movie/upcoming?api_key=${TMDB_API_KEY}&language=en-US&page=1&include_adult=false&append_to_response=videos`)
             dispatch({ type: ActionTypes.TRENDINGMOVIES, payload: response?.data?.results });
         }
         catch (err) {
@@ -21,7 +21,7 @@ export const getTVtime = (date) => {
 export const getTrendingTvShows = (date) => {
     return async (dispatch) => {
         try {
-            let response = await getResponse(`https://api.themoviedb.org/3/trending/tv/week?api_key=${TMDB_API_KEY}&language=en-US&page=1&include_adult=false`)
+            let response = await getResponse(`https://api.themoviedb.org/3/tv/on_the_air?api_key=${TMDB_API_KEY}&language=en-US&page=1&include_adult=false&append_to_response=videos`)
             dispatch({ type: ActionTypes.TRENDINGTVSHOWS, payload: response?.data?.results });
         }
         catch (err) {
