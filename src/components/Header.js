@@ -1,11 +1,11 @@
 // @app
-import React from 'react';
+import React, { useState } from 'react';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
+
 import { RFPercentage } from 'react-native-responsive-fontsize';
 import {
     Text,
-    TouchableOpacity,
     View
 } from 'react-native';
 
@@ -15,9 +15,10 @@ import Colors from '../styles/Colors';
 import { styles } from './styles';
 import Button from './Button';
 
-const Header = ({ title, goBack, navigation, edit, plus }) => {
+const Header = ({ title, goBack, navigation, callBack, edit, plus }) => {
+    const [isEdit, setisEdit] = useState(true)
     return (
-        <View style={styles.HeaderContainer}>
+        <View style={styles.HeaderContainer(isEdit)}>
             {goBack &&
                 <Button
                     callBack={() => navigation.pop()}
@@ -27,7 +28,6 @@ const Header = ({ title, goBack, navigation, edit, plus }) => {
                                 name={`left`}
                                 size={RFPercentage(2)}
                                 color={Colors.tabActive} />
-
                             <Text
                                 style={{ color: Colors.tabActive }}>{`Back`}
                             </Text>
@@ -36,10 +36,27 @@ const Header = ({ title, goBack, navigation, edit, plus }) => {
                 />
             }
 
-            <Text style={styles.title}>{title}</Text>
-
-            <Button title={<Text style={{ color: Colors.tabActive }}>{edit && `Edit`}</Text>} />
-
+            <Text style={styles.title(isEdit)}>{title}</Text>
+            {edit &&
+                <View style={{ flexDirection: 'row' }}>
+                    <Button
+                        callBack={() => {
+                            callBack(!isEdit)
+                            setisEdit(!isEdit)
+                        }}
+                        titleStyle={{ marginHorizontal: isEdit ? RFPercentage(-1) : RFPercentage(2) }}
+                        title={<Text style={{ color: Colors.tabActive }}>{isEdit ? `Edit` : `Done`}</Text>} />
+                    {!isEdit &&
+                        <Button
+                            callBack={() => {
+                                callBack(!isEdit)
+                                setisEdit(!isEdit)
+                            }}
+                            titleStyle={{ color: Colors.red }}
+                            title={`Delete`} />
+                    }
+                </View>
+            }
             {plus &&
                 <Button
                     title={<AntDesign

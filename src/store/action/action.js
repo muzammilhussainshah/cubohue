@@ -2,8 +2,6 @@
 
 import axios from "axios";
 import ActionTypes from "../constant/constant";
-// import moment from "moment/moment";
-// import store from '..';
 
 const TMDB_API_KEY = '54ed8b21fd2d7a380faaa388189b382f';
 

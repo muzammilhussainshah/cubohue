@@ -4,6 +4,7 @@ const Colors = {
     tabActive: "#1d6fc0",
     tabBg: "#262626",
     white: "#ffffff",
+    red: 'red',
     skyBlue: '#3498db',
 }
 
