@@ -3,6 +3,7 @@ import ActionTypes from '../constant/constant';
 const INITIAL_STATE = {
     trandingMovies: [], 
     trandingTVShows: [], 
+    videoDetail: [], 
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -16,6 +17,11 @@ export default (state = INITIAL_STATE, action) => {
             return ({
                 ...state,
                 trandingTVShows: action.payload
+            })
+        case ActionTypes.VIDEODETAIL:
+            return ({
+                ...state,
+                videoDetail: action.payload
             })
         default:
             return state;

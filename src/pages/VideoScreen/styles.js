@@ -9,7 +9,6 @@ export const styles = StyleSheet.create({
     },
     videoContainer: {
         height: RFPercentage(20),
-        backgroundColor: 'red'
     },
     title: (color, size, latterSpacing, textAlign) => ({
         color: color,
@@ -25,6 +24,7 @@ export const styles = StyleSheet.create({
     tags: {
         flexDirection: 'row',
         alignItems: "center",
+        flexWrap: 'wrap'
     },
     tagContainer: {
         backgroundColor: Colors.tabInactive,

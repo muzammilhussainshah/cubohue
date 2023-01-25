@@ -1,5 +1,6 @@
 // @app
 import React, {
+  useEffect,
   useState
 } from 'react';
 
@@ -20,9 +21,22 @@ import {
   Discover,
   Trailer
 } from './Components/Component';
+import { useDispatch, useSelector } from 'react-redux';
+import { getMovieDetails } from '../../store/action/action';
 
-const VideoScreen = ({ navigation }) => {
+const VideoScreen = ({ navigation, route }) => {
   const [activeTab, setActiveTab] = useState('Cast & Crew')
+  const dispatch = useDispatch()
+
+  const videoDetail = useSelector((state) => state.root.videoDetail);
+
+  useEffect(() => { dispatch(getMovieDetails(route?.params?.id)) }, [])
+
+  function toHoursAndMinutes(totalMinutes) {
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+    return hours + 'h : ' + minutes + 'm'
+  }
 
   return (
     <View style={styles.container}>
@@ -35,21 +49,24 @@ const VideoScreen = ({ navigation }) => {
       <ScrollView>
 
         <Image
-          resizeMode='stretch'
-          source={{ uri: 'https://upload.wikimedia.org/wikipedia/en/b/b9/Emmerdale_titles.png' }}
+          resizeMode='cover'
+          source={{ uri: `https://image.tmdb.org/t/p/w500/` + videoDetail?.backdrop_path }}
           style={styles.videoContainer} />
         <View style={styles.bodyContainer}>
-          <Text style={styles.title(Colors.white, RFPercentage(2))}>{`Emmerdale`}</Text>
+          <Text style={styles.title(Colors.white, RFPercentage(2))}>{videoDetail?.title}</Text>
 
-          {[`1972-10-16`, `2h 2m PG-13`].map((item) => <Text style={styles.title(Colors.tabInactive, RFPercentage(1.3))}>{item}</Text>)}
+          {[videoDetail.release_date, toHoursAndMinutes(videoDetail.runtime)]?.map((item) => <Text style={styles.title(Colors.tabInactive, RFPercentage(1.3))}>{item}</Text>)}
 
-          <Text style={styles.title(Colors.white, RFPercentage(1.4), RFPercentage(.1))}>{`The life of saveral families in the yorkshire Dales revole around a farm and the nearby village. With murders, affairs, lies, deceit, loughter and tears, it's all there in the village. `}</Text>
+          <Text style={styles.title(Colors.white, RFPercentage(1.4), RFPercentage(.1))}>{videoDetail.overview}</Text>
           <View style={styles.tags}>
 
-            {[`Soap`, `Drama`].map((item) => <Button customStyle={styles.tagContainer} titleStyle={styles.tagText} title={item} />)}
+            {videoDetail?.genres?.map((item) => <Button
+              customStyle={styles.tagContainer}
+              titleStyle={styles.tagText}
+              title={item.name} />)}
 
           </View>
-          <Text style={styles.title(Colors.white, RFPercentage(1.3))}>{`Status: In Production`}</Text>
+          <Text style={styles.title(Colors.white, RFPercentage(1.3))}>{`Status: ${videoDetail.status}`}</Text>
 
           <View style={{ flexDirection: 'row', marginVertical: RFPercentage(.5) }}>
 
@@ -63,8 +80,8 @@ const VideoScreen = ({ navigation }) => {
           </View>
 
           {activeTab == 'Discover' && <Discover />}
-          {activeTab == 'Trailer' && <Trailer />}
-          {activeTab == `Cast & Crew` && <CastAndCrew />}
+          {activeTab == 'Trailer' && <Trailer trailer={videoDetail?.videos?.results} />}
+          {activeTab == `Cast & Crew` && <CastAndCrew cast={videoDetail?.credits?.cast && videoDetail?.credits?.cast} />}
 
         </View>
 

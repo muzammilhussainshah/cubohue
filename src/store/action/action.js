@@ -29,6 +29,17 @@ export const getTrendingTvShows = (date) => {
         }
     }
 }
+export const getMovieDetails = (movieId) => {
+    return async (dispatch) => {
+        try {
+            let response = await getResponse(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${TMDB_API_KEY}&language=en-US&page=1&include_adult=false&append_to_response=videos,credits`)
+            dispatch({ type: ActionTypes.VIDEODETAIL, payload: response?.data });
+        }
+        catch (err) {
+            console.log(err, 'error')
+        }
+    }
+}
 
 //   static async getTrendingTvShows(page) {
 //     let url = `https://api.themoviedb.org/3/trending/tv/week?api_key=${TMDB_API_KEY}&language=en-US&page=${page}&include_adult=false`;

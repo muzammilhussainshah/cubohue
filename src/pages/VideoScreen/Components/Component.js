@@ -7,39 +7,40 @@ import Colors from '../../../styles/Colors';
 import { CastAndCrewData, TrailerData } from "../DummyData"
 import { styles } from '../styles';
 
-export const CastAndCrew = () => {
+export const CastAndCrew = ({ cast }) => {
     return (
-        CastAndCrewData.map((item, index) => {
+        cast?.length ? cast.map((item, index) => {
             return (
                 <View key={index.toString()} style={{ flexDirection: 'row', marginVertical: RFPercentage(.5) }}>
-                    <Image source={{ uri: item.url }} resizeMode={'stretch'} style={{ flex: 3, height: RFPercentage(10), borderRadius: RFPercentage(2) }} />
+                    <Image source={{ uri: `https://image.tmdb.org/t/p/w500/` + item.profile_path }} resizeMode={'stretch'} style={{ flex: 3, height: RFPercentage(10), borderRadius: RFPercentage(2) }} />
                     <View style={{ flex: 7, justifyContent: 'center' }}>
                         <Text style={[styles.title(Colors.white, RFPercentage(1.5)), { marginHorizontal: RFPercentage(2) }]}>{item?.name}</Text>
-                        <Text style={[styles.title(Colors.tabInactive, RFPercentage(1.5)), { marginHorizontal: RFPercentage(2) }]}>{item?.name2}</Text>
+                        <Text style={[styles.title(Colors.tabInactive, RFPercentage(1.5)), { marginHorizontal: RFPercentage(2) }]}>{item?.character}</Text>
                     </View>
                 </View>
 
             )
         })
-
+            : <></>
     )
 }
-export const Trailer = () => {
+export const Trailer = ({ trailer }) => {
     return (
-        TrailerData.map((item, index) => {
+        trailer?.length ? trailer?.map((item, index) => {
             return (
-                <View key={index.toString()} style={{ flexDirection: 'row', marginVertical: RFPercentage(.5) }}>
+                <View key={index.toString()} style={{ flexDirection: 'row', alignItems: "center", marginVertical: RFPercentage(.5) }}>
                     <Image
-                        source={{ uri: item.url }}
-                        resizeMode={'stretch'}
+                        source={{ uri: `https://capeandcastle.com/wp-content/uploads/2020/06/Dummy-1.jpg` }}
+                        resizeMode={'cover'}
                         style={{ flex: 3.5, height: RFPercentage(10), borderRadius: RFPercentage(2) }} />
                     <View style={{ flex: 6.5, }}>
-                        <Text style={[styles.title(Colors.white, RFPercentage(1.5)), { marginHorizontal: RFPercentage(2) }]}>{item?.title}</Text>
+                        <Text style={[styles.title(Colors.white, RFPercentage(1.5)), { marginHorizontal: RFPercentage(2) }]}>{item?.name}</Text>
                     </View>
                 </View>
 
             )
-        })
+        }) :
+            <></>
     )
 }
 

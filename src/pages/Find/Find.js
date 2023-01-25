@@ -78,7 +78,7 @@ const Find = ({ navigation }) => {
         renderItem={({ item }) => {
           return (
             <TouchableOpacity
-              onPress={() => navigation.navigate('VideoScreen')}
+              onPress={() => navigation.navigate('VideoScreen', { id: item?.id })}
               activeOpacity={.8}
               style={styles.thumbnailContainer}>
               <Image
