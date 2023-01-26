@@ -18,13 +18,14 @@ export const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: Colors.black,
     },
-    listContainer: {
+    listContainer: (TVTracker) => ({
         height: RFPercentage(10),
         width: "100%",
         flexDirection: 'row',
         paddingHorizontal: RFPercentage(1),
-        backgroundColor: Colors.tabBg
-    },
+        marginVertical: TVTracker && RFPercentage(1),
+        backgroundColor: TVTracker ? null : Colors.tabBg
+    }),
     profileContainer: {
         flex: 2,
         flexDirection: 'row',
@@ -36,13 +37,13 @@ export const styles = StyleSheet.create({
         borderBottomWidth: .4,
         borderBottomColor: Colors.tabInactive,
     },
-    daysContainer: {
+    daysContainer: (TVTracker) => ({
         flex: 3.5,
         justifyContent: "center",
         alignItems: 'center',
-        borderBottomWidth: .4,
+        borderBottomWidth: TVTracker ? 0 : .4,
         borderBottomColor: Colors.tabInactive,
-    },
+    }),
     poster: {
         height: '90%',
         width: '60%',
@@ -65,5 +66,16 @@ export const styles = StyleSheet.create({
         borderRadius: RFPercentage(1),
         marginTop: RFPercentage(2),
         overflow: 'hidden'
-    }
+    },
+    TVTrackerListBodyContainer: { flex: 1, justifyContent: "space-between" },
+    TVTrackerListBarContainer: {
+        flexDirection: 'row', alignItems: 'center'
+    },
+    TVTrackerListBar: {
+        height: RFPercentage(1.5), borderRadius: RFPercentage(1), backgroundColor: 'red', width: '80%'
+    },
+    episodeInfoContainer:{ flex: 1, flexDirection: "row", alignItems: 'center' },
+    episodeInfo:{ backgroundColor: Colors.tabBg, height: RFPercentage(3.2), marginVertical: RFPercentage(.7), justifyContent: "center", alignItems: 'center', width: '70%' },
+    episodeStyle:{ color: Colors.white, fontWeight: '600' },
+
 });

@@ -3,7 +3,9 @@ import { RFPercentage } from 'react-native-responsive-fontsize';
 import Colors from '../styles/Colors';
 export const styles = StyleSheet.create({
     title: (isEdit) => ({
-        color: Colors.white, fontSize: RFPercentage(2), fontWeight: '700', textTransform: 'capitalize',
+        color: Colors.white, fontSize: RFPercentage(2),
+        fontWeight: '700',
+        textTransform: 'capitalize',
         flex: isEdit ? 1 : 0,
         textAlign: "center"
     }),

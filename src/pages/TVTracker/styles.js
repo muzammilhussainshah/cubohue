@@ -23,5 +23,10 @@ export const styles = StyleSheet.create({
     titleStyle: {
         color: Colors.white,
 
+    },
+    movieListContainer: {
+        borderRadius: RFPercentage(1),
+        marginTop: RFPercentage(2),
+        overflow: 'hidden'
     }
 });

@@ -15,7 +15,7 @@ import { Movies } from './Components/Component';
 import { styles } from './styles';
 
 const Countdown = ({ navigation }) => {
-  const [isEdit, setisEdit] = useState(false)
+  const [isEdit, setisEdit] = useState(true)
   return (
     <View style={styles.container}>
       <Header
@@ -23,7 +23,6 @@ const Countdown = ({ navigation }) => {
         edit
         callBack={(state) => setisEdit(state)}
       />
-
       <FlatList
         data={[1,1,1,1]}
         contentContainerStyle={styles.movieListContainer}
