@@ -6,6 +6,8 @@ import { Image, Text, TouchableOpacity, View } from "react-native"
 
 import Entypo from 'react-native-vector-icons/Entypo'
 import AntDesign from 'react-native-vector-icons/AntDesign'
+import * as Progress from 'react-native-progress';
+
 import { RFPercentage } from 'react-native-responsive-fontsize';
 import Colors from '../../../styles/Colors';
 import { styles } from '../styles';
@@ -41,8 +43,18 @@ export const Movies = ({ isEdit, TVTracker }) => {
                     <>
                         <View style={styles.TVTrackerListBodyContainer}>
                             <Text style={[styles.titleStyle, { marginLeft: RFPercentage(.5) }]}>{`Bhagya Lakshmi`}</Text>
-                            <View style={styles.TVTrackerListBarContainer}>
-                                <View style={styles.TVTrackerListBar}></View>
+                            <View style={[styles.TVTrackerListBarContainer, {}]}>
+                                {/* <View style={styles.TVTrackerListBar}></View> */}
+                                {/* height: RFPercentage(1.5), borderRadius: RFPercentage(1), backgroundColor: 'red', width: '80%' */}
+
+                                <Progress.Bar
+                                    borderWidth={0}
+                                    unfilledColor={Colors.tabInactive}
+                                    height={RFPercentage(1)}
+                                    progress={.9}
+                                    color={`purple`}
+                                    width={RFPercentage(20)} />
+
                                 <Text style={[styles.title, { marginLeft: RFPercentage(.5) }]}>{`1/1`}</Text>
                             </View>
                         </View>

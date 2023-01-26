@@ -71,11 +71,11 @@ export const styles = StyleSheet.create({
     TVTrackerListBarContainer: {
         flexDirection: 'row', alignItems: 'center'
     },
-    TVTrackerListBar: {
-        height: RFPercentage(1.5), borderRadius: RFPercentage(1), backgroundColor: 'red', width: '80%'
-    },
+    // TVTrackerListBar: {
+    //     height: RFPercentage(1.5), borderRadius: RFPercentage(1), backgroundColor: 'red', width: '80%'
+    // },
     episodeInfoContainer:{ flex: 1, flexDirection: "row", alignItems: 'center' },
-    episodeInfo:{ backgroundColor: Colors.tabBg, height: RFPercentage(3.2), marginVertical: RFPercentage(.7), justifyContent: "center", alignItems: 'center', width: '70%' },
+    episodeInfo:{ backgroundColor: Colors.tabInactive, height: RFPercentage(3), marginVertical: RFPercentage(.7), justifyContent: "center", alignItems: 'center', width: '65%' },
     episodeStyle:{ color: Colors.white, fontWeight: '600' },
 
 });
