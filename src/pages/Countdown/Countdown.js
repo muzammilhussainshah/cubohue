@@ -7,7 +7,6 @@ import {
   View
 } from 'react-native';
 
-import { RFPercentage } from 'react-native-responsive-fontsize';
 
 import Button from '../../components/Button';
 import Header from '../../components/Header';
@@ -24,7 +23,7 @@ const Countdown = ({ navigation }) => {
         callBack={(state) => setisEdit(state)}
       />
       <FlatList
-        data={[1,1,1,1]}
+        data={[1, 1, 1, 1]}
         contentContainerStyle={styles.movieListContainer}
         ListHeaderComponent={() => {
           return (

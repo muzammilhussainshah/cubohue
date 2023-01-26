@@ -60,5 +60,14 @@ export const styles = StyleSheet.create({
         fontSize: RFPercentage(1.7)
 
     }),
+    seasonListContainer: {
+        height: RFPercentage(5),
+        flexDirection: 'row',
+        borderBottomWidth: .4,
+        borderBottomColor: Colors.tabInactive,
+        alignItems:'center',
+        justifyContent:'space-between'
+
+    }
 
 });

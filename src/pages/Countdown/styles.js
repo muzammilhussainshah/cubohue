@@ -67,15 +67,30 @@ export const styles = StyleSheet.create({
         marginTop: RFPercentage(2),
         overflow: 'hidden'
     },
-    TVTrackerListBodyContainer: { flex: 1, justifyContent: "space-between" },
-    TVTrackerListBarContainer: {
-        flexDirection: 'row', alignItems: 'center'
+    TVTrackerListBodyContainer: {
+        flex: 1,
+        justifyContent: "space-between"
     },
-    // TVTrackerListBar: {
-    //     height: RFPercentage(1.5), borderRadius: RFPercentage(1), backgroundColor: 'red', width: '80%'
-    // },
-    episodeInfoContainer:{ flex: 1, flexDirection: "row", alignItems: 'center' },
-    episodeInfo:{ backgroundColor: Colors.tabInactive, height: RFPercentage(3), marginVertical: RFPercentage(.7), justifyContent: "center", alignItems: 'center', width: '65%' },
-    episodeStyle:{ color: Colors.white, fontWeight: '600' },
+    TVTrackerListBarContainer: {
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    episodeInfoContainer: {
+        flex: 1,
+        flexDirection: "row",
+        alignItems: 'center'
+    },
+    episodeInfo: {
+        backgroundColor: Colors.tabInactive,
+        height: RFPercentage(3),
+        marginVertical: RFPercentage(.7),
+        justifyContent: "center",
+        alignItems: 'center',
+        width: '65%'
+    },
+    episodeStyle: {
+        color: Colors.white,
+        fontWeight: '600'
+    },
 
 });

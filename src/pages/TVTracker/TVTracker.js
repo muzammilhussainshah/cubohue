@@ -1,17 +1,13 @@
 // @app
-import React, {
-  useEffect,
-  useState
-} from 'react';
-import { FlatList, Text, View } from 'react-native';
-import { RFPercentage } from 'react-native-responsive-fontsize';
+import React from 'react';
+import { FlatList, View } from 'react-native';
+
 import Button from '../../components/Button';
 import Header from '../../components/Header';
 import { Movies } from '../Countdown/Components/Component';
 import { styles } from './styles';
 
-const TVTracker = ({ navigation }) => {
-  const [isEdit, setisEdit] = useState(false)
+const TVTracker = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
       <Header title={`TV Tracker`} />
@@ -19,7 +15,7 @@ const TVTracker = ({ navigation }) => {
         <FlatList
           data={[1, 1, 1, 1]}
           contentContainerStyle={styles.movieListContainer}
-          renderItem={({ }) => (<Movies isEdit={true} TVTracker />)}
+          renderItem={({ }) => (<Movies callBack={() => navigation.navigate('VideoScreen', { seasons: true })} isEdit={true} TVTracker />)}
           keyExtractor={item => item.id}
         />
 

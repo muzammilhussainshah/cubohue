@@ -1,10 +1,19 @@
 import React, { } from 'react';
-import { Image, Text, View } from 'react-native';
+import {
+    Image,
+    Text,
+    TouchableOpacity,
+    View
+} from 'react-native';
+
 import { RFPercentage } from 'react-native-responsive-fontsize';
+import AntDesign from 'react-native-vector-icons/AntDesign'
+import Entypo from 'react-native-vector-icons/Entypo'
+import * as Progress from 'react-native-progress';
+
 import Button from '../../../components/Button';
 import Colors from '../../../styles/Colors';
 
-import { CastAndCrewData, TrailerData } from "../DummyData"
 import { styles } from '../styles';
 
 export const CastAndCrew = ({ cast }) => {
@@ -70,6 +79,31 @@ export const Discover = () => {
                     titleStyle={styles.tagText}
                     title={`dog`} />
             </View>
+        </>
+    )
+}
+export const Season = () => {
+    return (
+        <>
+            <Text style={styles.title(Colors.white, RFPercentage(2))}>{`Seasons`}</Text>
+            <TouchableOpacity
+                activeOpacity={.9}
+                style={styles.seasonListContainer}>
+                <Entypo
+                    name={`circle`}
+                    color={Colors.white}
+                    size={RFPercentage(2)} />
+                <Text style={styles.title(Colors.white, RFPercentage(1.5),)}>{`Season 1 `}</Text>
+                <Progress.Bar
+                    borderWidth={0}
+                    unfilledColor={Colors.tabInactive}
+                    height={RFPercentage(1)}
+                    progress={.9}
+                    color={`purple`}
+                    width={RFPercentage(22)} />
+                <Text style={styles.title(Colors.white, RFPercentage(1.5),)}>{`746/747 `}</Text>
+                <AntDesign name="right" size={RFPercentage(1.5)} color={Colors.white} />
+            </TouchableOpacity>
         </>
     )
 }

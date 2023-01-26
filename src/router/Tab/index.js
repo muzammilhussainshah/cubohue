@@ -2,6 +2,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 import SplashScreen from '../../pages/SplashScreen/SplashScreen';
+import SeasonScreen from '../../pages/SeasonScreen/SeasonScreen';
 import VideoScreen from '../../pages/VideoScreen/VideoScreen';
 
 import MyTabs from './SCBottomTabNavigator';
@@ -25,6 +26,7 @@ function RootNavigator() {
       <Stack.Screen name="MyTabs" component={MyTabs} />
       <Stack.Screen name="VideoScreen" component={VideoScreen} />
       <Stack.Screen name="SplashScreen" component={SplashScreen} />
+      <Stack.Screen name="SeasonScreen" component={SeasonScreen} />
 
       {/* <Stack.Screen name="VideoScreen" component={VideoScreen} />
       <Stack.Screen name="TrendingNews" component={TrendingNews} />
