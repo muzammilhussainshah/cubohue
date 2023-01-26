@@ -2,13 +2,14 @@
 import React from 'react';
 import {  TextInput,  View, } from 'react-native';
 
-const SearchBar = ({ containerStyle, icon, textStyle, placeholderTextColor, placeHolder }) => {
+const SearchBar = ({ containerStyle, icon, textStyle,callBack, placeholderTextColor, placeHolder }) => {
     return (
         <View style={containerStyle}>
             {icon}
             <TextInput
                 placeholderTextColor={placeholderTextColor}
                 placeholder={placeHolder}
+                onChangeText={(text)=>callBack(text)}
                 style={textStyle} />
         </View>
     );

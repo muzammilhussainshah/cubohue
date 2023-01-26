@@ -31,6 +31,8 @@ import {
 
 const Find = ({ navigation }) => {
   const [activeTab, setActiveTab] = useState('Movies')
+  const [movies, setmovies] = useState([])
+  const [shows, setShows] = useState([])
 
   const dispatch = useDispatch()
 
@@ -41,6 +43,46 @@ const Find = ({ navigation }) => {
 
   const trandingMovies = useSelector((state) => state.root.trandingMovies);
   const trandingTVShows = useSelector((state) => state.root.trandingTVShows);
+
+
+  useEffect(() => {
+    setmovies(trandingMovies)
+    setShows(trandingTVShows)
+
+  }, [trandingMovies, trandingTVShows])
+
+  const searchForMovie = (e) => {
+    let keywords = e.split(' ');
+    if (keywords[0] === '') {
+      setmovies(trandingMovies);
+    }
+    if (keywords[0] !== '') {
+      let searchPattern = new RegExp(
+        keywords.map((term) => `(?=.*${term})`).join(''),
+        'i'
+      );
+      let filterChat = [];
+      for (let index = 0; index < trandingMovies?.length; index++) {
+        filterChat = trandingMovies?.filter((data) => data.title.match(searchPattern));
+      }
+      setmovies(filterChat);
+    }
+  };
+  const searchForShow = (e) => {
+    let keywords = e.split(' ');
+    if (keywords[0] === '') setShows(trandingTVShows)
+    if (keywords[0] !== '') {
+      let searchPattern = new RegExp(
+        keywords.map((term) => `(?=.*${term})`).join(''),
+        'i'
+      );
+      let filterChat = [];
+      for (let index = 0; index < trandingTVShows?.length; index++) {
+        filterChat = trandingTVShows?.filter((data) => data.name.match(searchPattern));
+      }
+      setShows(filterChat);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -60,6 +102,10 @@ const Find = ({ navigation }) => {
         />
       </View>
       <SearchBar
+        callBack={(text) => {
+          if (activeTab == 'Movies') searchForMovie(text)
+          else searchForShow(text)
+        }}
         icon={<Fontisto
           name="search"
           color={Colors.tabInactive}
@@ -72,7 +118,7 @@ const Find = ({ navigation }) => {
       <Text
         style={styles.listTitle}>{`Coming Soon`}</Text>
       <FlatList
-        data={activeTab == 'Movies' ? trandingMovies : trandingTVShows}
+        data={activeTab == 'Movies' ? movies : shows}
         numColumns={2}
         columnWrapperStyle={styles.listContainer}
         renderItem={({ item }) => {

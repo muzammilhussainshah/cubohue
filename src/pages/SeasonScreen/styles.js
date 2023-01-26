@@ -5,14 +5,12 @@ export const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: Colors.tabBg,
-        // alignItems: 'center',
         paddingVertical: RFPercentage(5),
         paddingHorizontal: RFPercentage(2)
     },
     headerContainer: {
         flexDirection: 'row',
         justifyContent: "space-between",
-        // backgroundColor: 'red',
         alignItems: "center",
         paddingVertical: RFPercentage(1)
     },
@@ -36,14 +34,11 @@ export const styles = StyleSheet.create({
         flex:8.5,
         justifyContent:"center",
         paddingHorizontal:RFPercentage(1)
-        // backgroundColor:'red'
     },
     checkContainer:{
         flex:1.5,
         justifyContent:"center",
         alignItems:'flex-end',
         paddingHorizontal:RFPercentage(1)
-
-        // backgroundColor:'blue'
     }
 });
