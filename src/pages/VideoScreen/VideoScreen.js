@@ -51,7 +51,6 @@ const VideoScreen = ({ navigation, route }) => {
     return hours + 'h : ' + minutes + 'm'
   }
 
-
   return (
     <View style={styles.container}>
       <Header

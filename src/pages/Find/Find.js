@@ -44,7 +44,6 @@ const Find = ({ navigation }) => {
   const trandingMovies = useSelector((state) => state.root.trandingMovies);
   const trandingTVShows = useSelector((state) => state.root.trandingTVShows);
 
-
   useEffect(() => {
     setmovies(trandingMovies)
     setShows(trandingTVShows)
@@ -134,7 +133,7 @@ const Find = ({ navigation }) => {
               />
               <Button
                 customStyle={styles.addIconContainer}
-                callBack={() => navigation.navigate('VideoScreen')}
+                callBack={() => {}}
                 title={<AntDesign
                   name={`plus`}
                   size={RFPercentage(2)}

@@ -1,6 +1,7 @@
 import React, { } from 'react';
 import {
     Image,
+    Linking,
     Text,
     TouchableOpacity,
     View
@@ -37,7 +38,10 @@ export const Trailer = ({ trailer }) => {
     return (
         trailer?.length ? trailer?.map((item, index) => {
             return (
-                <View key={index.toString()} style={{ flexDirection: 'row', alignItems: "center", marginVertical: RFPercentage(.5) }}>
+                <TouchableOpacity
+                    activeOpacity={0.9}
+                    onPress={() => { Linking.openURL('https://www.youtube.com/watch?v=' + item.key) }}
+                    key={index.toString()} style={{ flexDirection: 'row', alignItems: "center", marginVertical: RFPercentage(.5) }}>
                     <Image
                         source={{ uri: `https://capeandcastle.com/wp-content/uploads/2020/06/Dummy-1.jpg` }}
                         resizeMode={'cover'}
@@ -45,7 +49,7 @@ export const Trailer = ({ trailer }) => {
                     <View style={{ flex: 6.5, }}>
                         <Text style={[styles.title(Colors.white, RFPercentage(1.5)), { marginHorizontal: RFPercentage(2) }]}>{item?.name}</Text>
                     </View>
-                </View>
+                </TouchableOpacity >
 
             )
         }) :
@@ -95,7 +99,7 @@ export const Season = ({ callBack }) => {
                     color={Colors.white}
                     size={RFPercentage(2)} />
                 <Text style={styles.title(Colors.white, RFPercentage(1.5),)}>{`Season 1 `}</Text>
-                <Progress.Bar   
+                <Progress.Bar
                     borderWidth={0}
                     unfilledColor={Colors.tabInactive}
                     height={RFPercentage(1)}
