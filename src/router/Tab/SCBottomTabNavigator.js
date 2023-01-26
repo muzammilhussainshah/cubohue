@@ -19,8 +19,6 @@ export default class BottomTabNavigator extends Component {
   render() {
     return (
       <BottomTab.Navigator
-        initialRouteName="My Profile"
-
         screenOptions={{
           tabBarActiveTintColor: Colors.tabActive,
           tabBarInactiveTintColor: Colors.tabInactive,

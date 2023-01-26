@@ -24,7 +24,7 @@ const TVTracker = ({ navigation }) => {
         />
 
       </View>
-      <Text style={styles.noMsgTitle}>{`No Tracked TV Shows.`}</Text>
+      {/* <Text style={styles.noMsgTitle}>{`No Tracked TV Shows.`}</Text> */}
       <Button
         customStyle={styles.buttonStyle}
         title={`Add TV Show`}
