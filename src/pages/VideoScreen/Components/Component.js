@@ -82,19 +82,20 @@ export const Discover = () => {
         </>
     )
 }
-export const Season = () => {
+export const Season = ({ callBack }) => {
     return (
         <>
             <Text style={styles.title(Colors.white, RFPercentage(2))}>{`Seasons`}</Text>
             <TouchableOpacity
                 activeOpacity={.9}
+                onPress={() => callBack()}
                 style={styles.seasonListContainer}>
                 <Entypo
                     name={`circle`}
                     color={Colors.white}
                     size={RFPercentage(2)} />
                 <Text style={styles.title(Colors.white, RFPercentage(1.5),)}>{`Season 1 `}</Text>
-                <Progress.Bar
+                <Progress.Bar   
                     borderWidth={0}
                     unfilledColor={Colors.tabInactive}
                     height={RFPercentage(1)}

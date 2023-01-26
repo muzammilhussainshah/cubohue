@@ -7,7 +7,6 @@ import {
   Image,
   ScrollView,
   Text,
-  TouchableOpacity,
   View
 } from 'react-native';
 
@@ -51,7 +50,7 @@ const VideoScreen = ({ navigation, route }) => {
     const minutes = totalMinutes % 60;
     return hours + 'h : ' + minutes + 'm'
   }
-  
+
 
   return (
     <View style={styles.container}>
@@ -79,7 +78,7 @@ const VideoScreen = ({ navigation, route }) => {
 
           <Text style={styles.title(Colors.white, RFPercentage(1.4), RFPercentage(.1))}>{videoDetail?.overview}</Text>
           {route.params.seasons ?
-            <Season />
+            <Season callBack={() => navigation.navigate('SeasonScreen')} />
             : <>
               <View style={styles.tags}>
 
