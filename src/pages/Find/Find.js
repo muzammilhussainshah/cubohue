@@ -5,15 +5,11 @@ import React, {
 } from 'react';
 import {
   FlatList,
-  Image,
   Text,
-  TouchableOpacity,
-  AsyncStorage,
   View
 } from 'react-native';
 
 import Fontisto from 'react-native-vector-icons/Fontisto'
-import AntDesign from 'react-native-vector-icons/AntDesign'
 import { RFPercentage } from 'react-native-responsive-fontsize';
 import {
   useDispatch,
@@ -29,92 +25,40 @@ import {
   getTrendingTvShows,
   getTVtime
 } from '../../store/action/action';
+import {
+  SearchForShow,
+  SearchForMovie,
+  _storeData,
+  _storeDataTVShows,
+  _retrieveData,
+  LISTITEM
+} from './Components/Component';
 
 const Find = ({ navigation }) => {
   const [activeTab, setActiveTab] = useState('Movies')
   const [movies, setmovies] = useState([])
   const [countDown, setcountDown] = useState([])
+  const [tvShows, settvShows] = useState([])
   const [shows, setShows] = useState([])
 
   const dispatch = useDispatch()
-
-  useEffect(() => {
-    dispatch(getTVtime())
-    dispatch(getTrendingTvShows())
-
-  }, [])
-  const _retrieveData = async () => {
-    try {
-      const value = await AsyncStorage.getItem('@MySuperStore:key');
-      console.log(value, 'valuevaluevalue');
-      if (value !== null) {
-        // We have data!!
-        console.log(value, 'valuevaluevalue');
-      }
-    } catch (error) {
-      console.log(error, 'valuevaluevalue');
-      // Error retrieving data
-    }
-  };
 
   const trandingMovies = useSelector((state) => state.root.trandingMovies);
   const trandingTVShows = useSelector((state) => state.root.trandingTVShows);
 
   useEffect(() => {
+    dispatch(getTVtime())
+    dispatch(getTrendingTvShows())
+    _retrieveData(setcountDown, settvShows)
+  }, [])
+
+
+  useEffect(() => {
     setmovies(trandingMovies)
     setShows(trandingTVShows)
-
   }, [trandingMovies, trandingTVShows])
 
-  const searchForMovie = (e) => {
-    let keywords = e.split(' ');
-    if (keywords[0] === '') {
-      setmovies(trandingMovies);
-    }
-    if (keywords[0] !== '') {
-      let searchPattern = new RegExp(
-        keywords.map((term) => `(?=.*${term})`).join(''),
-        'i'
-      );
-      let filterChat = [];
-      for (let index = 0; index < trandingMovies?.length; index++) {
-        filterChat = trandingMovies?.filter((data) => data.title.match(searchPattern));
-      }
-      setmovies(filterChat);
-    }
-  };
-  const searchForShow = (e) => {
-    let keywords = e.split(' ');
-    if (keywords[0] === '') setShows(trandingTVShows)
-    if (keywords[0] !== '') {
-      let searchPattern = new RegExp(
-        keywords.map((term) => `(?=.*${term})`).join(''),
-        'i'
-      );
-      let filterChat = [];
-      for (let index = 0; index < trandingTVShows?.length; index++) {
-        filterChat = trandingTVShows?.filter((data) => data.name.match(searchPattern));
-      }
-      setShows(filterChat);
-    }
-  };
-  const _storeData = async (data) => {
 
-    // setcountDown()
-    try {
-      let copyArr = JSON.parse(JSON.stringify(countDown));
-      let isAlreadyInList = copyArr.findIndex((key) => key.id == data.id)
-      if (isAlreadyInList !== -1) copyArr.splice(isAlreadyInList, 1)
-      else copyArr.push(data)
-      setcountDown(copyArr)
-      let moviesArr = JSON.stringify(copyArr)
-      await AsyncStorage.setItem('Movies', moviesArr,);
-      console.log('data added successFully')
-    } catch (error) {
-      console.log(error, 'data added successFully')
-      // Error saving data
-    }
-  };
   return (
     <View style={styles.container}>
       <Header title={`Find`} />
@@ -132,10 +76,17 @@ const Find = ({ navigation }) => {
           callBack={() => { setActiveTab('TV Shows') }}
         />
       </View>
+
       <SearchBar
         callBack={(text) => {
-          if (activeTab == 'Movies') searchForMovie(text)
-          else searchForShow(text)
+          if (activeTab == 'Movies') {
+            let filteredData = SearchForMovie(text, trandingMovies)
+            setmovies(filteredData);
+          }
+          else {
+            let result = SearchForShow(text, trandingTVShows)
+            setShows(result);
+          }
         }}
         icon={<Fontisto
           name="search"
@@ -146,45 +97,22 @@ const Find = ({ navigation }) => {
         placeHolder={`Movies & TV Shows`}
         textStyle={styles.textStyle}
       />
-      <Text
-        style={styles.listTitle}>{`Coming Soon`}</Text>
+
+      <Text style={styles.listTitle}>{`Coming Soon`}</Text>
+
       <FlatList
         data={activeTab == 'Movies' ? movies : shows}
         numColumns={2}
         columnWrapperStyle={styles.listContainer}
-        renderItem={({ item }) => {
-          let available = countDown.findIndex((key) => key.id == item.id)
-          return (
-            <TouchableOpacity
-              onPress={() => { navigation.navigate('VideoScreen', { id: item?.id, activeTab: activeTab }) }}
-              activeOpacity={.8}
-              style={styles.thumbnailContainer}>
-              <Image
-                source={{ uri: `https://image.tmdb.org/t/p/w500/` + item.poster_path }}
-                resizeMode={'stretch'}
-                style={styles.thumbnailStyle}
-              />
-              <Button
-                customStyle={styles.addIconContainer}
-                callBack={() => {
-                  _storeData(item)
-                }}
-                title={
-                  available !== -1 ?
-                    <AntDesign
-                      name={`checkcircle`}
-                      color={Colors.skyBlue}
-                      size={RFPercentage(2.8)} />
-                    :
-                    <AntDesign
-                      name={`plus`}
-                      size={RFPercentage(2)}
-                      color={Colors.white} />
-                }
-              />
-            </TouchableOpacity>
-          )
-        }}
+        renderItem={(item) => <LISTITEM
+          setcountDown={setcountDown}
+          settvShows={settvShows}
+          countDown={countDown}
+          activeTab={activeTab}
+          tvShows={tvShows}
+          navigation={navigation}
+          {...item}
+        />}
         keyExtractor={item => item.id}
       />
     </View>
