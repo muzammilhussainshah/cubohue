@@ -7,7 +7,7 @@ import { styles } from '../styles';
 import Colors from '../../../styles/Colors';
 import { RFPercentage } from 'react-native-responsive-fontsize';
 
-export const List = () => {
+export const List = ({ item }) => {
     const [isSelected, setIsSelected] = useState(false)
     return (
         <TouchableOpacity
@@ -17,7 +17,7 @@ export const List = () => {
             activeOpacity={0.8}
             style={styles.listContainer}>
             <View style={styles.titleContainer}>
-                <Text style={styles.selectAll}>{`Episode 1`}</Text>
+                <Text style={styles.selectAll}>{`Episode  ` + (Number(item) + 1)}</Text>
                 <Text style={styles.date}>{`2022-08-23`}</Text>
             </View>
             <View style={styles.checkContainer}>

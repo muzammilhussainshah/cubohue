@@ -37,12 +37,7 @@ export const getMovieDetails = (movieId) => {
             console.log(err, 'error')
         }
     }
-}
-// static async getTvShowsDetails(tvShowId) {
-//   let url = `https://api.themoviedb.org/3/tv/${tvShowId}?api_key=${TMDB_API_KEY}&language=en-US&page=1&include_adult=false&append_to_response=videos,credits`;
-//   let data = await fetch(url);
-//   return data.json();
-// }
+} 
 
 export const getTvShowsDetails = (tvShowId) => {
     return async (dispatch) => {
@@ -57,13 +52,7 @@ export const getTvShowsDetails = (tvShowId) => {
         }
     }
 }
-
-//   static async getTrendingTvShows(page) {
-//     let url = `https://api.themoviedb.org/3/trending/tv/week?api_key=${TMDB_API_KEY}&language=en-US&page=${page}&include_adult=false`;
-//     let data = await fetch(url);
-//     return data.json();
-//   }
-
+ 
 const getResponse = async (URL) => {
     try {
         const option = {

@@ -98,9 +98,7 @@ export const LISTITEM = ({ item, countDown, activeTab, setcountDown, settvShows,
     let available;
     if (activeTab == 'Movies') available = countDown?.findIndex((key) => key.id == item.id)
     else available = tvShows?.findIndex((key) => key.id == item.id)
-    // const videoDetail = useSelector((state) => state.root.videoDetail);
     const dispatch = useDispatch()
-    // console.log(videoDetail, 'videoDetailvideoDetailvideoDetail')
     return (
         <TouchableOpacity
             onPress={() => { navigation.navigate('VideoScreen', { id: item?.id, activeTab: activeTab }) }}

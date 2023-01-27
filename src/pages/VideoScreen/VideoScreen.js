@@ -50,7 +50,6 @@ const VideoScreen = ({ navigation, route }) => {
     const minutes = totalMinutes % 60;
     return hours + 'h : ' + minutes + 'm'
   }
-  // console.log(videoDetail,'videoDetailvideoDetail')
 
   return (
     <View style={styles.container}>
@@ -80,14 +79,10 @@ const VideoScreen = ({ navigation, route }) => {
 
           <Text style={styles.title(Colors.white, RFPercentage(1.4), RFPercentage(.1))}>{videoDetail?.overview}</Text>
           {route.params.seasons ?
-
-
             <>
               <Text style={styles.title(Colors.white, RFPercentage(2))}>{`Seasons`}</Text>
-              {videoDetail?.seasons?.map((item) => <Season item={item} callBack={() => navigation.navigate('SeasonScreen')} />)}
+              {videoDetail?.seasons?.map((item) => <Season item={item} callBack={() => navigation.navigate('SeasonScreen', { item })} />)}
             </>
-            // <></>
-            // <Season callBack={() => navigation.navigate('SeasonScreen')} />
             : <>
               <View style={styles.tags}>
 
