@@ -49,8 +49,13 @@ const Find = ({ navigation }) => {
   useEffect(() => {
     dispatch(getTVtime())
     dispatch(getTrendingTvShows())
-    _retrieveData(setcountDown, settvShows)
   }, [])
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      _retrieveData(setcountDown, settvShows)
+    });
+    return unsubscribe;
+  }, [navigation]);
 
 
   useEffect(() => {

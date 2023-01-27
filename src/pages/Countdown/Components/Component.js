@@ -6,7 +6,8 @@ import {
     Image,
     Text,
     TouchableOpacity,
-    View
+    View,
+    AsyncStorage
 } from "react-native"
 
 import Entypo from 'react-native-vector-icons/Entypo'
@@ -18,12 +19,65 @@ import Button from '../../../components/Button';
 import { RFPercentage } from 'react-native-responsive-fontsize';
 import { styles } from '../styles';
 
-export const Movies = ({ isEdit, TVTracker, callBack, seasons }) => {
+
+export const selectListHanlde = (item,movieList,setMovieList,isEdit) => {
+    if (!isEdit) {
+        let movieListCopy = JSON.parse(JSON.stringify(movieList));
+        let isAlreadyHave = movieListCopy.findIndex((key) => key.id == item.id)
+        if (isAlreadyHave !== -1) { movieListCopy.splice(isAlreadyHave, 1) }
+        else { movieListCopy.push(item) }
+        setMovieList(movieListCopy)
+    }
+}
+export const _retrieveData = async (setcountDown) => {
+    try {
+        const moviesList = await AsyncStorage.getItem('Movies');
+        if (moviesList !== null) setcountDown(JSON.parse(moviesList))
+    } catch (error) {
+        // Error retrieving data
+    }
+};
+
+
+export const days_between = (date1, date2) => {
+
+    // The number of milliseconds in one day
+    var ONE_DAY = 1000 * 60 * 60 * 24
+
+    // Convert both dates to milliseconds
+    var date1_ms = date1.getTime()
+    var date2_ms = date2.getTime()
+
+    // Calculate the difference in milliseconds
+    var difference_ms = Math.abs(date1_ms - date2_ms)
+
+    // Convert back to days and return
+    return Math.round(difference_ms / ONE_DAY)
+
+}
+export const Movies = ({ item, isEdit, TVTracker, callBack, seasons }) => {
     const [isSelected, setIsSelected] = useState(false)
 
     return (
         <TouchableOpacity
-            onPress={() => callBack ? callBack() : !isEdit && setIsSelected(!isSelected)}
+            onPress={() => {
+                callBack ?
+                    <>
+                        {!isEdit &&
+                            <>
+                                {/* // setIsSelected(!isSelected) */}
+                                {callBack(item)}
+                                {setIsSelected(!isSelected)}
+                            </>
+                        }
+                        {/* {callBack(item)}
+                        {setIsSelected(!isSelected)} */}
+                    </>
+
+                    : !isEdit &&
+
+                    setIsSelected(!isSelected)
+            }}
             activeOpacity={0.9}
             style={styles.listContainer(TVTracker)}>
             <View style={styles.profileContainer}>
@@ -40,7 +94,11 @@ export const Movies = ({ isEdit, TVTracker, callBack, seasons }) => {
                     <></>
                 }
                 <Image
-                    source={{ uri: `https://static.wikia.nocookie.net/jamescameronsavatar/images/e/e5/Avatar_TWoW_Neytiri_Textless_Poster.jpg/revision/latest?cb=20221125232909` }}
+                    source={{
+                        uri:
+                            `https://image.tmdb.org/t/p/w500/` + item?.poster_path
+                        //   `https://static.wikia.nocookie.net/jamescameronsavatar/images/e/e5/Avatar_TWoW_Neytiri_Textless_Poster.jpg/revision/latest?cb=20221125232909` 
+                    }}
                     style={styles.poster}
                 />
             </View>
@@ -75,13 +133,13 @@ export const Movies = ({ isEdit, TVTracker, callBack, seasons }) => {
                     </>
                     :
                     <>
-                        <Text style={[styles.titleStyle, { marginLeft: RFPercentage(.5) }]}>{`Avatar: The Way Of Water`}</Text>
-                        <Text style={[styles.title, { marginLeft: RFPercentage(.5) }]}>{`2022-14-14`}</Text>
+                        <Text style={[styles.titleStyle, { marginLeft: RFPercentage(.5) }]}>{item?.title}</Text>
+                        <Text style={[styles.title, { marginLeft: RFPercentage(.5) }]}>{item?.release_date}</Text>
                     </>}
             </View>
             <View style={styles.daysContainer(TVTracker)}>
                 {!TVTracker &&
-                    <Text style={styles.days}>{`-43 days`}</Text>
+                    <Text style={styles.days}>{days_between(new Date(item?.release_date), new Date()) + ` days`}</Text>
                 }
             </View>
         </TouchableOpacity>

@@ -15,7 +15,7 @@ import Colors from '../styles/Colors';
 import { styles } from './styles';
 import Button from './Button';
 
-const Header = ({ title, goBack, navigation, callBack, edit, plus }) => {
+const Header = ({ title, goBack, navigation,okCallBack, callBack, edit, plus }) => {
     const [isEdit, setisEdit] = useState(true)
     return (
         <View style={styles.HeaderContainer(isEdit)}>
@@ -41,7 +41,8 @@ const Header = ({ title, goBack, navigation, callBack, edit, plus }) => {
                 <View style={{ flexDirection: 'row' }}>
                     <Button
                         callBack={() => {
-                            callBack(!isEdit)
+                            // callBack(!isEdit)
+                            okCallBack(!isEdit)
                             setisEdit(!isEdit)
                         }}
                         titleStyle={{ marginHorizontal: isEdit ? RFPercentage(-1) : RFPercentage(2) }}
