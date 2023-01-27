@@ -8,6 +8,7 @@ import {
   Image,
   Text,
   TouchableOpacity,
+  AsyncStorage,
   View
 } from 'react-native';
 
@@ -32,6 +33,7 @@ import {
 const Find = ({ navigation }) => {
   const [activeTab, setActiveTab] = useState('Movies')
   const [movies, setmovies] = useState([])
+  const [countDown, setcountDown] = useState([])
   const [shows, setShows] = useState([])
 
   const dispatch = useDispatch()
@@ -39,7 +41,21 @@ const Find = ({ navigation }) => {
   useEffect(() => {
     dispatch(getTVtime())
     dispatch(getTrendingTvShows())
+
   }, [])
+  const _retrieveData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@MySuperStore:key');
+      console.log(value, 'valuevaluevalue');
+      if (value !== null) {
+        // We have data!!
+        console.log(value, 'valuevaluevalue');
+      }
+    } catch (error) {
+      console.log(error, 'valuevaluevalue');
+      // Error retrieving data
+    }
+  };
 
   const trandingMovies = useSelector((state) => state.root.trandingMovies);
   const trandingTVShows = useSelector((state) => state.root.trandingTVShows);
@@ -82,7 +98,23 @@ const Find = ({ navigation }) => {
       setShows(filterChat);
     }
   };
+  const _storeData = async (data) => {
 
+    // setcountDown()
+    try {
+      let copyArr = JSON.parse(JSON.stringify(countDown));
+      let isAlreadyInList = copyArr.findIndex((key) => key.id == data.id)
+      if (isAlreadyInList !== -1) copyArr.splice(isAlreadyInList, 1)
+      else copyArr.push(data)
+      setcountDown(copyArr)
+      let moviesArr = JSON.stringify(copyArr)
+      await AsyncStorage.setItem('Movies', moviesArr,);
+      console.log('data added successFully')
+    } catch (error) {
+      console.log(error, 'data added successFully')
+      // Error saving data
+    }
+  };
   return (
     <View style={styles.container}>
       <Header title={`Find`} />
@@ -121,9 +153,10 @@ const Find = ({ navigation }) => {
         numColumns={2}
         columnWrapperStyle={styles.listContainer}
         renderItem={({ item }) => {
+          let available = countDown.findIndex((key) => key.id == item.id)
           return (
             <TouchableOpacity
-              onPress={() => navigation.navigate('VideoScreen', { id: item?.id, activeTab: activeTab })}
+              onPress={() => { navigation.navigate('VideoScreen', { id: item?.id, activeTab: activeTab }) }}
               activeOpacity={.8}
               style={styles.thumbnailContainer}>
               <Image
@@ -133,11 +166,21 @@ const Find = ({ navigation }) => {
               />
               <Button
                 customStyle={styles.addIconContainer}
-                callBack={() => {}}
-                title={<AntDesign
-                  name={`plus`}
-                  size={RFPercentage(2)}
-                  color={Colors.white} />}
+                callBack={() => {
+                  _storeData(item)
+                }}
+                title={
+                  available !== -1 ?
+                    <AntDesign
+                      name={`checkcircle`}
+                      color={Colors.skyBlue}
+                      size={RFPercentage(2.8)} />
+                    :
+                    <AntDesign
+                      name={`plus`}
+                      size={RFPercentage(2)}
+                      color={Colors.white} />
+                }
               />
             </TouchableOpacity>
           )
