@@ -69,7 +69,8 @@ const Countdown = ({ navigation }) => {
           return (
             <Movies
               callBack={(item) => selectListHanlde(item, movieList, setMovieList, isEdit)}
-              isEdit={isEdit} item={item} />)
+              isEdit={isEdit} 
+              item={item} />)
         }}
         keyExtractor={item => item.id}
       />

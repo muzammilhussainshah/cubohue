@@ -61,7 +61,7 @@ export const styles = StyleSheet.create({
 
     }),
     seasonListContainer: {
-        height: RFPercentage(5),
+        height: RFPercentage(7),
         flexDirection: 'row',
         borderBottomWidth: .4,
         borderBottomColor: Colors.tabInactive,

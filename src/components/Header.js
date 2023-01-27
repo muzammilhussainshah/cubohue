@@ -41,7 +41,6 @@ const Header = ({ title, goBack, navigation,okCallBack, callBack, edit, plus }) 
                 <View style={{ flexDirection: 'row' }}>
                     <Button
                         callBack={() => {
-                            // callBack(!isEdit)
                             okCallBack(!isEdit)
                             setisEdit(!isEdit)
                         }}

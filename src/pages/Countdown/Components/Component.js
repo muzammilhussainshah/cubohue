@@ -20,7 +20,7 @@ import { RFPercentage } from 'react-native-responsive-fontsize';
 import { styles } from '../styles';
 
 
-export const selectListHanlde = (item,movieList,setMovieList,isEdit) => {
+export const selectListHanlde = (item, movieList, setMovieList, isEdit) => {
     if (!isEdit) {
         let movieListCopy = JSON.parse(JSON.stringify(movieList));
         let isAlreadyHave = movieListCopy.findIndex((key) => key.id == item.id)
@@ -57,7 +57,6 @@ export const days_between = (date1, date2) => {
 }
 export const Movies = ({ item, isEdit, TVTracker, callBack, seasons }) => {
     const [isSelected, setIsSelected] = useState(false)
-
     return (
         <TouchableOpacity
             onPress={() => {
@@ -94,11 +93,7 @@ export const Movies = ({ item, isEdit, TVTracker, callBack, seasons }) => {
                     <></>
                 }
                 <Image
-                    source={{
-                        uri:
-                            `https://image.tmdb.org/t/p/w500/` + item?.poster_path
-                        //   `https://static.wikia.nocookie.net/jamescameronsavatar/images/e/e5/Avatar_TWoW_Neytiri_Textless_Poster.jpg/revision/latest?cb=20221125232909` 
-                    }}
+                    source={{ uri: `https://image.tmdb.org/t/p/w500/` + item?.poster_path }}
                     style={styles.poster}
                 />
             </View>
@@ -106,7 +101,7 @@ export const Movies = ({ item, isEdit, TVTracker, callBack, seasons }) => {
                 {TVTracker ?
                     <>
                         <View style={styles.TVTrackerListBodyContainer}>
-                            <Text style={[styles.titleStyle, { marginLeft: RFPercentage(.5) }]}>{`Bhagya Lakshmi`}</Text>
+                            <Text style={[styles.titleStyle, { marginLeft: RFPercentage(.5), }]}>{item.name.substring(0, 20)}</Text>
                             <View style={[styles.TVTrackerListBarContainer, {}]}>
                                 <Progress.Bar
                                     borderWidth={0}
@@ -116,7 +111,7 @@ export const Movies = ({ item, isEdit, TVTracker, callBack, seasons }) => {
                                     color={`purple`}
                                     width={RFPercentage(20)} />
 
-                                <Text style={[styles.title, { marginLeft: RFPercentage(.5) }]}>{`1/1`}</Text>
+                                <Text style={[styles.title, { marginLeft: RFPercentage(.5) }]}>{`1/` + item?.number_of_seasons}</Text>
                             </View>
                         </View>
                         <View style={styles.episodeInfoContainer}>

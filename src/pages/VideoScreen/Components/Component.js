@@ -86,10 +86,9 @@ export const Discover = () => {
         </>
     )
 }
-export const Season = ({ callBack }) => {
+export const Season = ({ item, callBack }) => {
     return (
         <>
-            <Text style={styles.title(Colors.white, RFPercentage(2))}>{`Seasons`}</Text>
             <TouchableOpacity
                 activeOpacity={.9}
                 onPress={() => callBack()}
@@ -98,15 +97,15 @@ export const Season = ({ callBack }) => {
                     name={`circle`}
                     color={Colors.white}
                     size={RFPercentage(2)} />
-                <Text style={styles.title(Colors.white, RFPercentage(1.5),)}>{`Season 1 `}</Text>
+                <Text style={styles.title(Colors.white, RFPercentage(1.5),)}>{item.name}</Text>
                 <Progress.Bar
                     borderWidth={0}
                     unfilledColor={Colors.tabInactive}
                     height={RFPercentage(1)}
-                    progress={.9}
+                    progress={.3}
                     color={`purple`}
                     width={RFPercentage(22)} />
-                <Text style={styles.title(Colors.white, RFPercentage(1.5),)}>{`746/747 `}</Text>
+                <Text style={styles.title(Colors.white, RFPercentage(1.5),)}>{`746/ ` + item.episode_count}</Text>
                 <AntDesign name="right" size={RFPercentage(1.5)} color={Colors.white} />
             </TouchableOpacity>
         </>

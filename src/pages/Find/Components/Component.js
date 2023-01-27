@@ -6,8 +6,10 @@ import { AsyncStorage, Image, TouchableOpacity } from "react-native";
 import { RFPercentage } from 'react-native-responsive-fontsize';
 
 import AntDesign from 'react-native-vector-icons/AntDesign'
+import { useDispatch, useSelector } from 'react-redux';
 
 import Button from '../../../components/Button';
+import { getMovieDetails, getTvShowsDetails } from '../../../store/action/action';
 import Colors from '../../../styles/Colors';
 import { styles } from '../styles';
 
@@ -96,6 +98,9 @@ export const LISTITEM = ({ item, countDown, activeTab, setcountDown, settvShows,
     let available;
     if (activeTab == 'Movies') available = countDown?.findIndex((key) => key.id == item.id)
     else available = tvShows?.findIndex((key) => key.id == item.id)
+    // const videoDetail = useSelector((state) => state.root.videoDetail);
+    const dispatch = useDispatch()
+    // console.log(videoDetail, 'videoDetailvideoDetailvideoDetail')
     return (
         <TouchableOpacity
             onPress={() => { navigation.navigate('VideoScreen', { id: item?.id, activeTab: activeTab }) }}
@@ -108,9 +113,12 @@ export const LISTITEM = ({ item, countDown, activeTab, setcountDown, settvShows,
             />
             <Button
                 customStyle={styles.addIconContainer}
-                callBack={() => {
+                callBack={async () => {
                     if (activeTab == 'Movies') _storeData(item, countDown, setcountDown)
-                    else _storeDataTVShows(item, tvShows, settvShows)
+                    else {
+                        let result = await dispatch(getTvShowsDetails(item?.id))
+                        _storeDataTVShows(result, tvShows, settvShows)
+                    }
                 }}
                 title={
                     available !== -1 ?

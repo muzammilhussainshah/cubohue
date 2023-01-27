@@ -1,21 +1,40 @@
 // @app
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FlatList, View } from 'react-native';
 
 import Button from '../../components/Button';
 import Header from '../../components/Header';
 import { Movies } from '../Countdown/Components/Component';
+import { _retrieveData } from './Components/Component';
+
 import { styles } from './styles';
 
 const TVTracker = ({ navigation, route }) => {
+  const [tvShows, setTvShows] = useState([])
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      _retrieveData(setTvShows)
+    });
+    return unsubscribe;
+  }, [navigation]);
+
   return (
     <View style={styles.container}>
       <Header title={`TV Tracker`} />
       <View style={{ flex: 1, width: '100%' }}>
         <FlatList
-          data={[1, 1, 1, 1]}
+          data={tvShows}
           contentContainerStyle={styles.movieListContainer}
-          renderItem={({ }) => (<Movies callBack={() => navigation.navigate('VideoScreen', { seasons: true })} isEdit={true} TVTracker />)}
+          renderItem={({ item }) => {
+            return (
+              <Movies
+                item={item}
+                callBack={() => navigation.navigate('VideoScreen', { id: item?.id, activeTab: 'TV Shows', seasons: true })}
+                isEdit={true}
+                TVTracker />
+            )
+          }}
           keyExtractor={item => item.id}
         />
 

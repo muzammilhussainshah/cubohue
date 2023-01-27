@@ -50,6 +50,7 @@ export const getTvShowsDetails = (tvShowId) => {
             let response = await getResponse(`https://api.themoviedb.org/3/tv/${tvShowId}?api_key=${TMDB_API_KEY}&language=en-US&page=1&include_adult=false&append_to_response=videos,credits`)
             console.log(response, 'getTvShowsDetails')
             dispatch({ type: ActionTypes.VIDEODETAIL, payload: response?.data });
+            return response?.data 
         }
         catch (err) {
             console.log(err, 'error')

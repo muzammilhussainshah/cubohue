@@ -50,6 +50,7 @@ const VideoScreen = ({ navigation, route }) => {
     const minutes = totalMinutes % 60;
     return hours + 'h : ' + minutes + 'm'
   }
+  // console.log(videoDetail,'videoDetailvideoDetail')
 
   return (
     <View style={styles.container}>
@@ -63,7 +64,9 @@ const VideoScreen = ({ navigation, route }) => {
 
         <Image
           resizeMode='cover'
-          source={{ uri: `https://image.tmdb.org/t/p/w500/` + videoDetail?.backdrop_path }}
+          source={videoDetail?.backdrop_path ?
+            { uri: `https://image.tmdb.org/t/p/w500/` + videoDetail?.backdrop_path } :
+            { uri: `https://image.tmdb.org/t/p/w500/` + videoDetail?.poster_path }}
           style={styles.videoContainer} />
         <View style={styles.bodyContainer}>
           <Text style={styles.title(Colors.white, RFPercentage(2))}>{
@@ -77,7 +80,14 @@ const VideoScreen = ({ navigation, route }) => {
 
           <Text style={styles.title(Colors.white, RFPercentage(1.4), RFPercentage(.1))}>{videoDetail?.overview}</Text>
           {route.params.seasons ?
-            <Season callBack={() => navigation.navigate('SeasonScreen')} />
+
+
+            <>
+              <Text style={styles.title(Colors.white, RFPercentage(2))}>{`Seasons`}</Text>
+              {videoDetail?.seasons?.map((item) => <Season item={item} callBack={() => navigation.navigate('SeasonScreen')} />)}
+            </>
+            // <></>
+            // <Season callBack={() => navigation.navigate('SeasonScreen')} />
             : <>
               <View style={styles.tags}>
 
@@ -101,16 +111,19 @@ const VideoScreen = ({ navigation, route }) => {
               </View>
             </>
           }
-
-          {activeTab == 'Discover' && <Discover />}
-          {activeTab == 'Trailer' && <Trailer trailer={videoDetail?.videos?.results} />}
-          {activeTab == `Cast & Crew` && <CastAndCrew cast={videoDetail?.credits?.cast && videoDetail?.credits?.cast} />}
+          {!route.params.seasons &&
+            <>
+              {activeTab == 'Discover' && <Discover />}
+              {activeTab == 'Trailer' && <Trailer trailer={videoDetail?.videos?.results} />}
+              {activeTab == `Cast & Crew` && <CastAndCrew cast={videoDetail?.credits?.cast && videoDetail?.credits?.cast} />}
+            </>
+          }
 
         </View>
 
 
-      </ScrollView>
-    </View>
+      </ScrollView >
+    </View >
   );
 };
 export default VideoScreen;
