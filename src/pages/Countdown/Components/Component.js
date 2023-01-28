@@ -56,14 +56,7 @@ export const days_between = (date1, date2) => {
 }
 export const Movies = ({ item, isEdit, TVTracker, getFromAsync, callBack, seasons }) => {
     const [isSelected, setIsSelected] = useState(false)
-    console.log(getFromAsync, 'seasonsseasonsseasons', item.seasons)
     let result = item?.seasons?.filter((key) => typeof getFromAsync[key.id] !== 'undefined')
-    console.log(result, 'resultresult')
-
-    // let result = item.seasons.map((key) => {
-    //     if (typeof getFromAsync[key.id] !== 'undefined') return { [key.id]: getFromAsync[key.id] }
-
-    //   })
     return (
         <TouchableOpacity
             onPress={() => {
@@ -71,13 +64,10 @@ export const Movies = ({ item, isEdit, TVTracker, getFromAsync, callBack, season
                     <>
                         {!isEdit &&
                             <>
-                                {/* // setIsSelected(!isSelected) */}
                                 {callBack(item)}
                                 {setIsSelected(!isSelected)}
                             </>
                         }
-                        {/* {callBack(item)}
-                        {setIsSelected(!isSelected)} */}
                     </>
 
                     : !isEdit &&

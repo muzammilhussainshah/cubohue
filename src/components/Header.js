@@ -15,7 +15,7 @@ import Colors from '../styles/Colors';
 import { styles } from './styles';
 import Button from './Button';
 
-const Header = ({ title, goBack, navigation,okCallBack, callBack, edit, plus }) => {
+const Header = ({ title, goBack, navigation, okCallBack, callBack, edit, plus, check }) => {
     const [isEdit, setisEdit] = useState(true)
     return (
         <View style={styles.HeaderContainer(isEdit)}>
@@ -59,8 +59,19 @@ const Header = ({ title, goBack, navigation,okCallBack, callBack, edit, plus }) 
             }
             {plus &&
                 <Button
+                    callBack={() => callBack()}
                     title={<AntDesign
                         name={`plus`}
+                        size={RFPercentage(2.5)}
+                        color={Colors.tabActive} />
+                    }
+                />
+            }
+            {check &&
+                <Button
+                    callBack={() => callBack()}
+                    title={<AntDesign
+                        name={`check`}
                         size={RFPercentage(2.5)}
                         color={Colors.tabActive} />
                     }

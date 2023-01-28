@@ -1,5 +1,8 @@
 // @app
-import React, { useEffect, useState } from 'react';
+import React, {
+  useEffect,
+  useState
+} from 'react';
 import {
   FlatList,
   Text,
@@ -9,23 +12,22 @@ import {
 } from 'react-native';
 
 import Feather from 'react-native-vector-icons/Feather'
-import { RFPercentage } from 'react-native-responsive-fontsize';
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import Entypo from 'react-native-vector-icons/Entypo'
 import * as Progress from 'react-native-progress';
+import { RFPercentage } from 'react-native-responsive-fontsize';
 
 import Button from '../../components/Button';
 import Colors from '../../styles/Colors';
 import { styles } from './styles';
-import { List } from './Components/Component';
 
 const SeasonScreen = ({ navigation, route }) => {
   const [isSelected, setIsSelected] = useState({ [route?.params?.item?.id]: [] })
   const [isSelectAll, setisSelectAll] = useState(true)
   const [getFromAsync, setgetFromAsync] = useState([])
 
-
   const dummyData = Array.from({ length: route?.params?.item?.episode_count }, (v, i) => i);
+
   useEffect(async () => {
     const value = await AsyncStorage.getItem('alreadySeen');
     setgetFromAsync(JSON.parse(value))
@@ -33,6 +35,7 @@ const SeasonScreen = ({ navigation, route }) => {
       setIsSelected({ [route?.params?.item?.id]: JSON.parse(value)[route?.params?.item?.id] })
     }
   }, [])
+
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -68,9 +71,7 @@ const SeasonScreen = ({ navigation, route }) => {
       </View>
       <FlatList
         data={dummyData}
-        // renderItem={({ item }) => <List item={item} />}
         renderItem={({ item }) => {
-          // const [isSelected, setIsSelected] = useState(false)
           let isAlreadySelected = isSelected[route?.params?.item?.id].findIndex((key) => key == item)
           return (
             <TouchableOpacity

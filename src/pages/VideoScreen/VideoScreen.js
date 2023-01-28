@@ -37,6 +37,7 @@ const VideoScreen = ({ navigation, route }) => {
   const [activeTab, setActiveTab] = useState('Cast & Crew')
   const [isMovie, setisMovie] = useState(false)
   const [getFromAsync, setgetFromAsync] = useState([])
+  const [getmoviesFromAsync, setgetmoviesFromAsync] = useState([])
   const dispatch = useDispatch()
 
   const videoDetail = useSelector((state) => state.root.videoDetail);
@@ -53,6 +54,18 @@ const VideoScreen = ({ navigation, route }) => {
     const unsubscribe = navigation.addListener('focus', async () => {
       const value = await AsyncStorage.getItem('alreadySeen');
       setgetFromAsync(JSON.parse(value))
+      if (route?.params?.activeTab !== 'TV Shows') {
+
+        const movies = await AsyncStorage.getItem('Movies');
+        // console.log(JSON.parse(movies), 'moviesmoviesmovies',  )
+        setgetmoviesFromAsync(JSON.parse(movies))
+      } else {
+
+        const tvShows = await AsyncStorage.getItem('TVShows');
+        setgetmoviesFromAsync(JSON.parse(tvShows))
+
+      }
+
     });
     return unsubscribe;
   }, [navigation]);
@@ -67,7 +80,17 @@ const VideoScreen = ({ navigation, route }) => {
       <Header
         goBack
         title={`The Gray Man`}
-        plus
+        plus={getmoviesFromAsync.filter((key) => key.id == videoDetail.id)?.length > 0 ? false : true}
+        callBack={async () => {
+          let getmoviesFromAsyncCopy = JSON.parse(JSON.stringify(getmoviesFromAsync))
+          let getIndex = getmoviesFromAsyncCopy.findIndex((key) => key.id == videoDetail.id)
+          if (getIndex !== -1) { getmoviesFromAsyncCopy.splice(getIndex, 1) }
+          else { getmoviesFromAsyncCopy.push(videoDetail) }
+          if (route?.params?.activeTab !== 'TV Shows') await AsyncStorage.setItem('Movies', JSON.stringify(getmoviesFromAsyncCopy));
+          else await AsyncStorage.setItem('TVShows', JSON.stringify(getmoviesFromAsyncCopy));
+          setgetmoviesFromAsync(getmoviesFromAsyncCopy)
+        }}
+        check={getmoviesFromAsync.filter((key) => key.id == videoDetail.id)?.length == 0 ? false : true}
         navigation={navigation}
       />
       <ScrollView>
