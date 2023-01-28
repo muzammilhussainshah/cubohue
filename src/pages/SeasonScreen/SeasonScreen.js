@@ -1,10 +1,11 @@
 // @app
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   FlatList,
   Text,
   TouchableOpacity,
-  View
+  View,
+  AsyncStorage
 } from 'react-native';
 
 import Feather from 'react-native-vector-icons/Feather'
@@ -21,9 +22,19 @@ import { List } from './Components/Component';
 const SeasonScreen = ({ navigation, route }) => {
   const [isSelected, setIsSelected] = useState({ [route?.params?.item?.id]: [] })
   const [isSelectAll, setisSelectAll] = useState(true)
+  const [getFromAsync, setgetFromAsync] = useState([])
+
 
   const dummyData = Array.from({ length: route?.params?.item?.episode_count }, (v, i) => i);
+  useEffect(async () => {
+    const value = await AsyncStorage.getItem('alreadySeen');
+    setgetFromAsync(JSON.parse(value))
+    if (typeof JSON.parse(value)[route?.params?.item?.id] !== 'undefined') {
+      setIsSelected({ [route?.params?.item?.id]: JSON.parse(value)[route?.params?.item?.id] })
+    }
+    console.log(JSON.parse(value), 'valuevaluevaluevalue',)
 
+  }, [])
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -58,10 +69,14 @@ const SeasonScreen = ({ navigation, route }) => {
           let isAlreadySelected = isSelected[route?.params?.item?.id].findIndex((key) => key == item)
           return (
             <TouchableOpacity
-              onPress={() => {
+              onPress={async () => {
                 let copyArr = JSON.parse(JSON.stringify(isSelected));
                 if (isAlreadySelected !== -1) { copyArr[route?.params?.item?.id].splice(isAlreadySelected, 1) }
                 else { copyArr[route?.params?.item?.id].push(item) }
+
+                console.log(copyArr, 'getFromAsyncgetFromAsync',getFromAsync,{ ...copyArr, ...getFromAsync })
+                await AsyncStorage.setItem('alreadySeen', JSON.stringify({ ...getFromAsync, ...copyArr, }));
+
                 setIsSelected(copyArr)
               }}
               activeOpacity={0.8}
