@@ -27,14 +27,14 @@ const TVTracker = ({ navigation, route }) => {
 
       const value = await AsyncStorage.getItem('alreadySeen');
       setgetFromAsync(JSON.parse(value))
-      
-      
-      
+
+
+
     });
     return unsubscribe;
   }, [navigation]);
-  
-  console.log( getFromAsync, 'valuevaluevalue',tvShows)
+
+  // console.log(getFromAsync, 'valuevaluevalue', tvShows)
   return (
     <View style={styles.container}>
       <Header title={`TV Tracker`} />
@@ -44,9 +44,23 @@ const TVTracker = ({ navigation, route }) => {
             data={tvShows}
             contentContainerStyle={styles.movieListContainer}
             renderItem={({ item }) => {
+              // console.log(item, 'itemitemitemitem', getFromAsync)
+              // let result = item?.seasons?.filter((key) => getFromAsync[key.id])
+              // console.log(result, 'resultresult')
+              // let result = item.seasons.map((key) => {
+              //   if (typeof getFromAsync[key.id] !== 'undefined') return { [key.id]: getFromAsync[key.id] }
+
+              // })
+
+              // console.log(result, 'resultresultresult', item)
+
+              // getFromAsync.map((key) => {
+              // })
+              // getFromAsync.filter((key) => {key.seasons.filter(() => { })})
               return (
                 <Movies
                   item={item}
+                  getFromAsync={getFromAsync}
                   callBack={() => navigation.navigate('VideoScreen', { id: item?.id, activeTab: 'TV Shows', seasons: true })}
                   isEdit={true}
                   TVTracker />

@@ -54,8 +54,16 @@ export const days_between = (date1, date2) => {
     return Math.round(difference_ms / ONE_DAY)
 
 }
-export const Movies = ({ item, isEdit, TVTracker, callBack, seasons }) => {
+export const Movies = ({ item, isEdit, TVTracker, getFromAsync, callBack, seasons }) => {
     const [isSelected, setIsSelected] = useState(false)
+    console.log(getFromAsync, 'seasonsseasonsseasons', item.seasons)
+    let result = item?.seasons?.filter((key) => typeof getFromAsync[key.id] !== 'undefined')
+    console.log(result, 'resultresult')
+
+    // let result = item.seasons.map((key) => {
+    //     if (typeof getFromAsync[key.id] !== 'undefined') return { [key.id]: getFromAsync[key.id] }
+
+    //   })
     return (
         <TouchableOpacity
             onPress={() => {
@@ -106,11 +114,11 @@ export const Movies = ({ item, isEdit, TVTracker, callBack, seasons }) => {
                                     borderWidth={0}
                                     unfilledColor={Colors.tabInactive}
                                     height={RFPercentage(1)}
-                                    progress={.9}
+                                    progress={result?.length / item?.number_of_seasons}
                                     color={`purple`}
                                     width={RFPercentage(20)} />
 
-                                <Text style={[styles.title, { marginLeft: RFPercentage(.5) }]}>{`1/` + item?.number_of_seasons}</Text>
+                                <Text style={[styles.title, { marginLeft: RFPercentage(.5) }]}>{result?.length + ` /` + item?.number_of_seasons}</Text>
                             </View>
                         </View>
                         <View style={styles.episodeInfoContainer}>
