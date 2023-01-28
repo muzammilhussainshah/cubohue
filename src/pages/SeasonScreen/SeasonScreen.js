@@ -32,8 +32,6 @@ const SeasonScreen = ({ navigation, route }) => {
     if (typeof JSON.parse(value)[route?.params?.item?.id] !== 'undefined') {
       setIsSelected({ [route?.params?.item?.id]: JSON.parse(value)[route?.params?.item?.id] })
     }
-    console.log(JSON.parse(value), 'valuevaluevaluevalue',)
-
   }, [])
   return (
     <View style={styles.container}>
@@ -44,10 +42,17 @@ const SeasonScreen = ({ navigation, route }) => {
             size={RFPercentage(2.7)}
             color={Colors.white} />} />
         <Button
-          callBack={() => {
+          callBack={async () => {
             setisSelectAll(!isSelectAll)
-            if (isSelected[route?.params?.item?.id].length == 0 && isSelectAll) setIsSelected({ [route?.params?.item?.id]: dummyData })
-            else setIsSelected({ [route?.params?.item?.id]: [] })
+            if (isSelected[route?.params?.item?.id].length == 0 && isSelectAll) {
+              setIsSelected({ [route?.params?.item?.id]: dummyData })
+              await AsyncStorage.setItem('alreadySeen', JSON.stringify({ ...getFromAsync, [route?.params?.item?.id]: dummyData }));
+            }
+            else {
+              setIsSelected({ [route?.params?.item?.id]: [] })
+              await AsyncStorage.setItem('alreadySeen', JSON.stringify({ ...getFromAsync, [route?.params?.item?.id]: [] }));
+            }
+
           }}
           title={<Text style={styles.selectAll}>{isSelected[route?.params?.item?.id].length > 0 ? `Unselect All` : `Select All`}</Text>} />
       </View>
@@ -73,10 +78,7 @@ const SeasonScreen = ({ navigation, route }) => {
                 let copyArr = JSON.parse(JSON.stringify(isSelected));
                 if (isAlreadySelected !== -1) { copyArr[route?.params?.item?.id].splice(isAlreadySelected, 1) }
                 else { copyArr[route?.params?.item?.id].push(item) }
-
-                console.log(copyArr, 'getFromAsyncgetFromAsync',getFromAsync,{ ...copyArr, ...getFromAsync })
                 await AsyncStorage.setItem('alreadySeen', JSON.stringify({ ...getFromAsync, ...copyArr, }));
-
                 setIsSelected(copyArr)
               }}
               activeOpacity={0.8}

@@ -6,7 +6,8 @@ import React, {
 import {
   FlatList,
   Text,
-  View
+  View,
+  AsyncStorage
 } from 'react-native';
 
 import Button from '../../components/Button';
@@ -18,14 +19,22 @@ import { styles } from './styles';
 
 const TVTracker = ({ navigation, route }) => {
   const [tvShows, setTvShows] = useState([])
+  const [getFromAsync, setgetFromAsync] = useState([])
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
+    const unsubscribe = navigation.addListener('focus', async () => {
       _retrieveData(setTvShows)
+
+      const value = await AsyncStorage.getItem('alreadySeen');
+      setgetFromAsync(JSON.parse(value))
+      
+      
+      
     });
     return unsubscribe;
   }, [navigation]);
-
+  
+  console.log( getFromAsync, 'valuevaluevalue',tvShows)
   return (
     <View style={styles.container}>
       <Header title={`TV Tracker`} />

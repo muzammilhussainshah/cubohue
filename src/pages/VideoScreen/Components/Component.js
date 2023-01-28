@@ -86,26 +86,39 @@ export const Discover = () => {
         </>
     )
 }
-export const Season = ({ item, callBack }) => {
+export const Season = ({ item, callBack, getFromAsync }) => {
+    let result = Object.fromEntries(Object.entries(getFromAsync).filter(([key]) => key == item.id));
+    let isAlreadySeen;
+    if (Object.keys(result).length > 0 && result[item?.id]?.length) {
+         isAlreadySeen = true 
+        
+        }
+    else { isAlreadySeen = false }
     return (
         <>
             <TouchableOpacity
                 activeOpacity={.9}
                 onPress={() => callBack()}
                 style={styles.seasonListContainer}>
-                <Entypo
-                    name={`circle`}
-                    color={Colors.white}
-                    size={RFPercentage(2)} />
+                {isAlreadySeen == true ?
+                    <AntDesign
+                        name={`checkcircle`}
+                        color={Colors.skyBlue}
+                        size={RFPercentage(2)} /> :
+                    <Entypo
+                        name={`circle`}
+                        color={Colors.white}
+                        size={RFPercentage(2)} />
+                }
                 <Text style={styles.title(Colors.white, RFPercentage(1.5),)}>{item.name}</Text>
                 <Progress.Bar
                     borderWidth={0}
                     unfilledColor={Colors.tabInactive}
                     height={RFPercentage(1)}
-                    progress={.3}
+                    progress={result[item.id]?.length ? result[item.id]?.length / item?.episode_count : 0}
                     color={`purple`}
                     width={RFPercentage(22)} />
-                <Text style={styles.title(Colors.white, RFPercentage(1.5),)}>{`746/ ` + item.episode_count}</Text>
+                <Text style={styles.title(Colors.white, RFPercentage(1.5),)}>{result[item?.id]?.length ? result[item?.id]?.length + ` / ` + item.episode_count : 0 + ` / ` + item.episode_count}</Text>
                 <AntDesign name="right" size={RFPercentage(1.5)} color={Colors.white} />
             </TouchableOpacity>
         </>

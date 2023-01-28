@@ -7,7 +7,8 @@ import {
   Image,
   ScrollView,
   Text,
-  View
+  View,
+  AsyncStorage
 } from 'react-native';
 
 
@@ -35,16 +36,26 @@ import {
 const VideoScreen = ({ navigation, route }) => {
   const [activeTab, setActiveTab] = useState('Cast & Crew')
   const [isMovie, setisMovie] = useState(false)
+  const [getFromAsync, setgetFromAsync] = useState([])
   const dispatch = useDispatch()
 
   const videoDetail = useSelector((state) => state.root.videoDetail);
 
-  useEffect(() => {
+  useEffect(async () => {
     setisMovie(route?.params?.activeTab !== 'TV Shows' ? true : false)
     if (route?.params?.activeTab !== 'TV Shows') dispatch(getMovieDetails(route?.params?.id))
     else dispatch(getTvShowsDetails(route?.params?.id))
+
+
   }, [])
 
+  useEffect(async () => {
+    const unsubscribe = navigation.addListener('focus', async () => {
+      const value = await AsyncStorage.getItem('alreadySeen');
+      setgetFromAsync(JSON.parse(value))
+    });
+    return unsubscribe;
+  }, [navigation]);
   function toHoursAndMinutes(totalMinutes) {
     const hours = Math.floor(totalMinutes / 60);
     const minutes = totalMinutes % 60;
@@ -81,7 +92,7 @@ const VideoScreen = ({ navigation, route }) => {
           {route.params.seasons ?
             <>
               <Text style={styles.title(Colors.white, RFPercentage(2))}>{`Seasons`}</Text>
-              {videoDetail?.seasons?.map((item) => <Season item={item} callBack={() => navigation.navigate('SeasonScreen', { item })} />)}
+              {videoDetail?.seasons?.map((item) => <Season getFromAsync={getFromAsync} item={item} callBack={() => navigation.navigate('SeasonScreen', { item })} />)}
             </>
             : <>
               <View style={styles.tags}>
