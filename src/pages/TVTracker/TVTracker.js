@@ -25,7 +25,9 @@ const TVTracker = ({ navigation, route }) => {
     const unsubscribe = navigation.addListener('focus', async () => {
       _retrieveData(setTvShows)
       const value = await AsyncStorage.getItem('alreadySeen');
-      setgetFromAsync(JSON.parse(value))
+      if (value !== null) setgetFromAsync(JSON.parse(value))
+
+
     });
     return unsubscribe;
   }, [navigation]);

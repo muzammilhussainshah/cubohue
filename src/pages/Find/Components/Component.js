@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import Button from '../../../components/Button';
 import { getMovieDetails, getTvShowsDetails } from '../../../store/action/action';
+import ActionTypes from '../../../store/constant/constant';
 import Colors from '../../../styles/Colors';
 import { styles } from '../styles';
 
@@ -101,7 +102,10 @@ export const LISTITEM = ({ item, countDown, activeTab, setcountDown, settvShows,
     const dispatch = useDispatch()
     return (
         <TouchableOpacity
-            onPress={() => { navigation.navigate('VideoScreen', { id: item?.id, activeTab: activeTab }) }}
+            onPress={async () => {
+                await dispatch({ type: ActionTypes.VIDEODETAIL, payload: [] });
+                navigation.navigate('VideoScreen', { id: item?.id, activeTab: activeTab })
+            }}
             activeOpacity={.8}
             style={styles.thumbnailContainer}>
             <Image

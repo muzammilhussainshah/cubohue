@@ -8,7 +8,8 @@ import {
   ScrollView,
   Text,
   View,
-  AsyncStorage
+  AsyncStorage,
+  ActivityIndicator
 } from 'react-native';
 
 
@@ -44,28 +45,26 @@ const VideoScreen = ({ navigation, route }) => {
 
   useEffect(async () => {
     setisMovie(route?.params?.activeTab !== 'TV Shows' ? true : false)
-    if (route?.params?.activeTab !== 'TV Shows') dispatch(getMovieDetails(route?.params?.id))
-    else dispatch(getTvShowsDetails(route?.params?.id))
-
-
+    if (route?.params?.activeTab !== 'TV Shows') await dispatch(getMovieDetails(route?.params?.id))
+    else await dispatch(getTvShowsDetails(route?.params?.id))
   }, [])
 
   useEffect(async () => {
     const unsubscribe = navigation.addListener('focus', async () => {
       const value = await AsyncStorage.getItem('alreadySeen');
-      setgetFromAsync(JSON.parse(value))
+      if (value !== null) setgetFromAsync(JSON.parse(value))
+      
       if (route?.params?.activeTab !== 'TV Shows') {
 
         const movies = await AsyncStorage.getItem('Movies');
-        // console.log(JSON.parse(movies), 'moviesmoviesmovies',  )
-        setgetmoviesFromAsync(JSON.parse(movies))
+        if (movies !== null) setgetmoviesFromAsync(JSON.parse(movies))
+
       } else {
 
         const tvShows = await AsyncStorage.getItem('TVShows');
-        setgetmoviesFromAsync(JSON.parse(tvShows))
+        if (tvShows !== null) setgetmoviesFromAsync(JSON.parse(tvShows))
 
       }
-
     });
     return unsubscribe;
   }, [navigation]);

@@ -30,7 +30,9 @@ const SeasonScreen = ({ navigation, route }) => {
 
   useEffect(async () => {
     const value = await AsyncStorage.getItem('alreadySeen');
-    setgetFromAsync(JSON.parse(value))
+    if (value !== null) setgetFromAsync(JSON.parse(value))
+
+
     if (typeof JSON.parse(value)[route?.params?.item?.id] !== 'undefined') {
       setIsSelected({ [route?.params?.item?.id]: JSON.parse(value)[route?.params?.item?.id] })
     }
