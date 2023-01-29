@@ -63,7 +63,9 @@ const Find = ({ navigation }) => {
     setShows(trandingTVShows)
   }, [trandingMovies, trandingTVShows])
 
-
+  function onlyLettersAndNumbers(str) {
+    return /^[A-Za-z0-9]*$/.test(str);
+  }
   return (
     <View style={styles.container}>
       <Header title={`Find`} />
@@ -84,14 +86,16 @@ const Find = ({ navigation }) => {
 
       <SearchBar
         callBack={(text) => {
-          if (activeTab == 'Movies') {
-            let filteredData = SearchForMovie(text, trandingMovies)
-            setmovies(filteredData);
-          }
-          else {
-            let result = SearchForShow(text, trandingTVShows)
-            setShows(result);
-          }
+          if (onlyLettersAndNumbers(text)) {
+            if (activeTab == 'Movies') {
+              let filteredData = SearchForMovie(text, trandingMovies)
+              setmovies(filteredData);
+            }
+            else {
+              let result = SearchForShow(text, trandingTVShows)
+              setShows(result);
+            }
+          } else { }
         }}
         icon={<Fontisto
           name="search"
